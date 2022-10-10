@@ -1,26 +1,12 @@
 import 'package:flutter/material.dart';
 
+import 'Application/app.dart';
+
 void main() {
-  runApp(const MyApp());
+
+  runApp( MyApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        useMaterial3: true,
-        primarySwatch: Colors.blue,
-      ),
-      home: Home(),
-    );
-  }
-}
 
 class Home extends StatefulWidget {
   Home({Key? key}) : super(key: key);
@@ -31,7 +17,7 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   List<Image> images = [
-    Image(
+    const Image(
       image: NetworkImage(
           'https://drive.google.com/uc?export=view&id=1zhSdES1D_2YAjDXGutOjDDOLKxg1UqEj'),
       fit: BoxFit.fill,
