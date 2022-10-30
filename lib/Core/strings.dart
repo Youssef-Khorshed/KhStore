@@ -9,7 +9,14 @@ const String productAddedSuccess = "Product Added Successfully..!";
 const String productGetSuccess = "Product Get Successfully..!";
 const String productDeletedSuccess = "Product Deleted Successfully..!";
 const String productUpdatedSuccess = "Product Updated Successfully..!";
-const String baseUrl = 'https://api.escuelajs.co/api/v1/';
+const String getcategoriesSuccess = "Loaded Category items";
+const String userpasswrordkey = "password";
+const String usertokenkey = "token";
+String? userpasswrord;
+const String defaultimg =
+    'https://wegotthiscovered.com/wp-content/uploads/2022/05/Spy-x-Family-anya-1200x675.png';
+String? usertoken;
+const String baseUrl = 'https://student.valuxapps.com/api/';
 const String pageviewImg1 =
     'https://drive.google.com/uc?export=view&id=1zhSdES1D_2YAjDXGutOjDDOLKxg1UqEj';
 const String pageviewImg2 =

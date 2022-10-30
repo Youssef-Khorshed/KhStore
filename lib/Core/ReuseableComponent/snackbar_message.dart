@@ -1,26 +1,30 @@
 import 'package:flutter/material.dart';
 
+const Duration duration = Duration(milliseconds: 700);
+
 class SnackBarMessage {
   static void showSuccessSnackBar(
       {required String message, required BuildContext context}) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
+        duration: duration,
         content: Text(
           message,
-          style: TextStyle(color: Colors.white),
+          style: TextStyle(color: Colors.white, fontSize: 20),
         ),
         backgroundColor: Colors.green,
       ),
     );
   }
 
-  void showErrorSnackBar(
+  static void showErrorSnackBar(
       {required String message, required BuildContext context}) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
+        duration: duration,
         content: Text(
           message,
-          style: TextStyle(color: Colors.white),
+          style: const TextStyle(color: Colors.white),
         ),
         backgroundColor: Colors.redAccent,
       ),

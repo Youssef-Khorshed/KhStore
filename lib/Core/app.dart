@@ -1,66 +1,38 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:store/Presentation/Logic/bloc/check_internet_bloc_bloc.dart';
-import 'package:store/Presentation/Logic/bloc/prodcuts_bloc.dart';
-import 'package:store/Presentation/widget/Pageview/pageview.dart';
+import 'package:store/Core/colors.dart';
 import 'package:store/Core/depndancyinjection.dart' as db;
-
-import 'ReuseableComponent/snackbar_message.dart';
+import 'package:store/Features/auth/Presentation/Widgets/Login/login.dart';
+import '../Features/auth/Presentation/Logic/bloc/auth_bloc.dart';
+import '../Features/product/Presentation/Logic/bloc/checkinternetblock/check_internet_bloc_bloc.dart';
+import '../Features/product/Presentation/Logic/bloc/productBloc/prodcuts_bloc.dart';
+import '../Features/product/Presentation/widget/Home/home.dart';
 
 class MyApp extends StatelessWidget {
-  // private constructor
-  const MyApp._();
-
-  // private instance
-  static MyApp? _app;
-  factory MyApp() {
-    return _app ?? const MyApp._();
-  }
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
         providers: [
           BlocProvider(
-              create: (_) => db.db<ProdcutsBloc>()..add(GetProdcutsEvent())),
-          BlocProvider(
             create: (context) => db.db<CheckInternetBlocBloc>()
               ..add(CheckInternetFirstTimeEvent()),
-          )
+          ),
+          BlocProvider(
+            create: (context) => db.db<AuthBloc>(),
+          ),
+          BlocProvider(
+              create: (_) => db.db<ProdcutsBloc>()
+                ..add(GetBannerEvent())
+                ..add(GetProdcutsEvent())
+                ..add(GetCategoriesEvent())),
         ],
         child: MaterialApp(
           title: 'Flutter Demo',
           debugShowCheckedModeBanner: false,
           theme: ThemeData(
-            useMaterial3: true,
-            primarySwatch: Colors.blue,
+            primarySwatch: color6,
           ),
-          home: const Check(),
+          home: LoginPage(),
         ));
-  }
-}
-
-class Check extends StatelessWidget {
-  const Check({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return BlocConsumer<CheckInternetBlocBloc, CheckInternetBlocState>(
-      builder: (context, state) => Scaffold(
-        appBar: AppBar(),
-        // ignore: prefer_const_constructors
-        body: Center(
-          child: const Text('Data'),
-        ),
-      ),
-      listener: (context, state) {
-        if (state is ConnectedState) {
-          SnackBarMessage.showSuccessSnackBar(
-              message: 'Connected', context: context);
-        } else {
-          SnackBarMessage().showErrorSnackBar(
-              message: 'No Internet Connection', context: context);
-        }
-      },
-    );
   }
 }
