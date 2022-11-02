@@ -6,7 +6,7 @@ import 'package:store/Core/strings.dart';
 abstract class LocalAuth {
   Future<Unit> cashpassword({required String password});
   Future<String> getcashedpassword();
-  Future<Unit> cashtoken({required String password});
+  Future<Unit> cashtoken({required String tokenvalue});
   Future<String> getcashedtoken();
 }
 
@@ -16,7 +16,7 @@ class LocalAuthImp extends LocalAuth {
 
   @override
   Future<Unit> cashpassword({required String password}) async {
-    return cash_item(password: password, key: userpasswrordkey);
+    return cash_item(value: password, key: userpasswrordkey);
   }
 
   @override
@@ -25,8 +25,8 @@ class LocalAuthImp extends LocalAuth {
   }
 
   @override
-  Future<Unit> cashtoken({required String password}) {
-    return cash_item(key: usertokenkey, password: password);
+  Future<Unit> cashtoken({required String tokenvalue}) {
+    return cash_item(key: usertokenkey, value: tokenvalue);
   }
 
   @override
@@ -35,9 +35,8 @@ class LocalAuthImp extends LocalAuth {
   }
 
 // resueable methods
-  Future<Unit> cash_item(
-      {required String key, required String password}) async {
-    sharedPreferences.setString(key, password);
+  Future<Unit> cash_item({required String key, required String value}) async {
+    sharedPreferences.setString(key, value);
     return Future.value(unit);
   }
 

@@ -36,7 +36,9 @@ class GetProdcutsFail extends ProdcutsState {
 class GetCategorySuccess extends ProdcutsState {
   List<InsideData> products;
   String message;
-  GetCategorySuccess({required this.products, required this.message});
+  String title;
+  GetCategorySuccess(
+      {required this.products, required this.message, required this.title});
   @override
   List<Object?> get props => [products];
 }
@@ -102,4 +104,25 @@ class UpdatedBannerIndexState extends ProdcutsState {
   UpdatedBannerIndexState({required this.index});
   @override
   List<Object?> get props => [index];
+}
+
+class UpdatedproductIndexState extends ProdcutsState {
+  int index;
+  UpdatedproductIndexState({required this.index});
+  @override
+  List<Object?> get props => [index];
+}
+
+class GetUserDataState extends ProdcutsState {
+  UserEntiy? userEntiy;
+  GetUserDataState({this.userEntiy});
+  @override
+  List<Object?> get props => [userEntiy];
+}
+
+class GetUserDataFailState extends ProdcutsState {
+  String message;
+  GetUserDataFailState({required this.message});
+  @override
+  List<Object?> get props => [message];
 }

@@ -1,8 +1,9 @@
 import 'package:store/Core/exception.dart';
 import 'package:store/Core/internet.dart';
+import 'package:store/Features/auth/Data/DataSource/local.dart';
+import 'package:store/Features/auth/Domain/Entity/user.dart';
 import 'package:store/Features/product/Data/datasources/local.dart';
 import 'package:store/Features/product/Data/datasources/remote.dart';
-import 'package:store/Features/product/Data/models/product/products.dart';
 import 'package:store/Core/error.dart';
 import 'package:dartz/dartz.dart';
 import 'package:store/Features/product/Domain/Entities/banner/banner.dart';
@@ -10,39 +11,20 @@ import 'package:store/Features/product/Domain/Entities/categories/Categoty.dart'
 import 'package:store/Features/product/Domain/Entities/product/insidedata.dart';
 import 'package:store/Features/product/Domain/Repositories/product.dart';
 
-import '../../Domain/Entities/product/products.dart';
+import '../../../../Core/strings.dart';
 
 typedef Future<Unit> add_delete_update_post();
 
 class ProductRepoImp extends ProductRepo {
   RemoteDataSource remote;
   LocalDataSource local;
+  LocalAuth localAuth;
   NetworkInfo connection;
   ProductRepoImp(
-      {required this.local, required this.remote, required this.connection});
-  // @override
-  // Future<Either<Failure, Unit>> addproduct({required Product product}) async {
-  //   final productModel = ProductModel(
-  //       status: product.status, message: product.message, data: product.data);
-
-  //   return method(
-  //       add_delete_update_post: () => remote.addproduct(product: productModel));
-  // }
-
-  // @override
-  // Future<Either<Failure, Unit>> deleteproduct({required int id}) {
-  //   return method(add_delete_update_post: () => remote.deleteproduct(id: id));
-  // }
-
-  // @override
-  // Future<Either<Failure, Unit>> updateproduct({required Product product}) {
-  //   final productModel = ProductModel(
-  //       status: product.status, message: product.message, data: product.data);
-
-  //   return method(
-  //       add_delete_update_post: () =>
-  //           remote.updateproduct(product: productModel));
-  // }
+      {required this.local,
+      required this.remote,
+      required this.connection,
+      required this.localAuth});
 
   @override
   Future<Either<Failure, List<InsideData>>> getAllproducts() async {
@@ -114,6 +96,25 @@ class ProductRepoImp extends ProductRepo {
         return Right(await remote.getcategory(id: id));
       } on ApiException {
         return Left(ApiFailure());
+      }
+    } else {
+      return Left(InternetFailure());
+    }
+  }
+
+  @override
+  Future<Either<Failure, UserEntiy>> getuserdata() async {
+    if (await connection.isConnected) {
+      try {
+        final token = await localAuth.getcashedtoken();
+        try {
+          final res = await remote.getuserdata(token: token);
+          return Right(res);
+        } on ApiException {
+          return Left(ApiFailure());
+        }
+      } on CashException {
+        return Left(CashFailure());
       }
     } else {
       return Left(InternetFailure());

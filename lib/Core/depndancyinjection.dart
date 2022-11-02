@@ -16,6 +16,7 @@ import 'package:store/Features/product/Domain/UseCases/getbanner.dart';
 import 'package:store/Features/product/Domain/UseCases/getProducts.dart';
 import 'package:store/Features/product/Domain/UseCases/getcategories.dart';
 import 'package:store/Features/product/Domain/UseCases/getcategory.dart';
+import 'package:store/Features/product/Domain/UseCases/getuserdata.dart';
 import '../Features/auth/Presentation/Logic/bloc/auth_bloc.dart';
 import '../Features/product/Data/datasources/local.dart';
 import '../Features/product/Data/repositories/repo.dart';
@@ -27,9 +28,11 @@ final db = GetIt.instance;
 Future<void> init() async {
   //Bloc
   db.registerFactory(() => ProdcutsBloc(
+        userDataUsecase: db(),
         getproductUsecase: db(), getBannerUseCase: db(),
         getCategoriesUseCase: db(),
         categoryUseCase: db(),
+
         // deleteproductUsecase: db(),
         // updateproductUsecase: db()
       ));
@@ -44,10 +47,11 @@ Future<void> init() async {
   db.registerLazySingleton(() => GetproductUsecase(repo: db()));
   db.registerLazySingleton(() => LoginUseCase(repo: db()));
   db.registerLazySingleton(() => RegisterUseCase(repo: db()));
+  db.registerLazySingleton(() => UserDataUsecase(repo: db()));
 
   //Reposatory
-  db.registerLazySingleton<ProductRepo>(
-      () => ProductRepoImp(connection: db(), local: db(), remote: db()));
+  db.registerLazySingleton<ProductRepo>(() => ProductRepoImp(
+      connection: db(), local: db(), remote: db(), localAuth: db()));
   db.registerLazySingleton<AuthRepo>(
       () => AuthRepoImp(localAuth: db(), networkInfo: db(), remote: db()));
 

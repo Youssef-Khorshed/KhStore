@@ -22,8 +22,8 @@ class AuthRepoImp extends AuthRepo {
     if (await networkInfo.isConnected) {
       try {
         final res = await remote.login(email: email, password: password);
-        localAuth.cashtoken(password: res.data!.token!);
-        localAuth.cashpassword(password: password);
+        await localAuth.cashtoken(tokenvalue: res.data!.token!);
+        await localAuth.cashpassword(password: password);
         return Right(res);
       } on AuthException {
         return Left(AuthFailure());
@@ -39,8 +39,8 @@ class AuthRepoImp extends AuthRepo {
     if (await networkInfo.isConnected) {
       try {
         final res = await remote.register(userinfo: userinfo);
-        localAuth.cashtoken(password: res.data!.token!);
-        localAuth.cashpassword(password: userinfo.password!);
+        await localAuth.cashtoken(tokenvalue: res.data!.token!);
+        await localAuth.cashpassword(password: userinfo.password!);
         return Right(res);
       } on AuthException {
         return Left(AuthFailure());

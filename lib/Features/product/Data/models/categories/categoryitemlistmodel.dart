@@ -1,5 +1,3 @@
-import 'package:store/Features/product/Data/models/categories/categories.dart';
-import 'package:store/Features/product/Data/models/product/insideprodunctmodel.dart';
 import 'package:store/Features/product/Data/models/product/outsideprodunctmodel.dart';
 import 'package:store/Features/product/Domain/Entities/categories/categoryitemlist.dart';
 
@@ -10,7 +8,9 @@ class CategoryItemListModel extends CategoryItemList {
 
   factory CategoryItemListModel.fromJson(Map<String, dynamic> json) {
     return CategoryItemListModel(
-        status: json['status'], message: json['message'], data: json['data']);
+        status: json['status'],
+        message: json['message'],
+        data: OutSideProductModel.fromJson(json['data']));
   }
 
   Map<String, dynamic> toJson() {

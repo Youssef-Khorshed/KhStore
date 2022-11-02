@@ -7,6 +7,8 @@ const Color color4 = Color(0xFF685268);
 const Color color5 = Color(0xFF2F1F1B);
 const Color color7 = Color.fromARGB(255, 0, 0, 0);
 const Color color8 = Color.fromARGB(255, 255, 0, 0);
+const Color color10 = Color.fromARGB(255, 87, 169, 197);
+
 Color color_grey = Colors.grey.shade700;
 Color color_grey2 = Colors.grey;
 const MaterialColor color6 = MaterialColor(

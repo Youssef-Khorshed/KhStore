@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:store/Features/auth/Domain/Entity/user.dart';
 import 'package:store/Features/product/Domain/Entities/categories/Categoty.dart';
 import 'package:store/Features/product/Domain/Entities/banner/banner.dart';
 import 'package:store/Features/product/Domain/Entities/product/insidedata.dart';
@@ -11,4 +12,5 @@ abstract class ProductRepo {
   Future<Either<Failure, List<Banner>>> getbanner();
   Future<Either<Failure, List<Category>>> getcategories();
   Future<Either<Failure, List<InsideData>>> getcategory({required int id});
+  Future<Either<Failure, UserEntiy>> getuserdata();
 }

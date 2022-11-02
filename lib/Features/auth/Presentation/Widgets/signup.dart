@@ -3,8 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:store/Core/strings.dart';
 import 'package:store/Features/auth/Domain/Entity/userinfo.dart';
 import 'package:store/Features/auth/Presentation/Logic/bloc/auth_bloc.dart';
-import '../../../../../Core/ReuseableComponent/snackbar_message.dart';
-import '../component.dart';
+import '../../../../Core/ReuseableComponent/snackbar_message.dart';
+import 'component.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({Key? key, this.title}) : super(key: key);
@@ -78,7 +78,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                   formKey: _formKey),
                           createAccountLabel(
                             context: context,
-                            text: 'Register',
+                            text: 'Login',
                           ),
                         ],
                       ),

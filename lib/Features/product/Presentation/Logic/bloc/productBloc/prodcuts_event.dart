@@ -20,9 +20,10 @@ class AddProductEvent extends ProdcutsEvent {
 
 class GetCategoryEvent extends ProdcutsEvent {
   int id;
-  GetCategoryEvent({required this.id});
+  String title;
+  GetCategoryEvent({required this.id, required this.title});
   @override
-  List<Object> get props => [id];
+  List<Object> get props => [id, title];
 }
 
 class GetCategoriesEvent extends ProdcutsEvent {
@@ -35,9 +36,21 @@ class GetBannerEvent extends ProdcutsEvent {
   List<Object> get props => [];
 }
 
+class GetUserDataEvent extends ProdcutsEvent {
+  @override
+  List<Object> get props => [];
+}
+
 class UpdateBannerIndextEvent extends ProdcutsEvent {
   int index;
   UpdateBannerIndextEvent({required this.index});
+  @override
+  List<Object> get props => [index];
+}
+
+class UpdateProductIndextEvent extends ProdcutsEvent {
+  int index;
+  UpdateProductIndextEvent({required this.index});
   @override
   List<Object> get props => [index];
 }

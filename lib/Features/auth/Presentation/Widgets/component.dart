@@ -1,11 +1,10 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:store/Core/colors.dart';
 import 'package:store/Features/auth/Presentation/Logic/bloc/auth_bloc.dart';
-
-import '../Sign Up/signup.dart';
+import '../../Domain/Entity/userinfo.dart';
+import 'signup.dart';
 
 Widget entryField(String title,
     {bool isPassword = false, required TextEditingController controller}) {
@@ -23,6 +22,7 @@ Widget entryField(String title,
         ),
         TextFormField(
             controller: controller,
+            keyboardType: TextInputType.text,
             validator: validation(),
             obscureText: isPassword,
             decoration: InputDecoration(
@@ -42,14 +42,18 @@ String? Function(String?)? validation() {
   };
 }
 
-Widget submitButton(
-    {required AuthBloc bloc,
-    required String email,
-    required String password,
-    required BuildContext context}) {
+Widget submitButton({
+  required AuthBloc bloc,
+  required String email,
+  required String password,
+  required BuildContext context,
+  required GlobalKey<FormState> formKey,
+}) {
   return InkWell(
     onTap: () {
-      bloc.add(LoginEvent(email: email, password: password));
+      if (formKey.currentState!.validate()) {
+        bloc.add(LoginEvent(email: email, password: password));
+      }
     },
     child: Container(
       width: MediaQuery.of(context).size.width,
@@ -110,7 +114,8 @@ Widget divider() {
   );
 }
 
-Widget createAccountLabel({required BuildContext context}) {
+Widget createAccountLabel(
+    {required BuildContext context, required String text}) {
   return InkWell(
     onTap: () {
       Navigator.push(
@@ -122,7 +127,7 @@ Widget createAccountLabel({required BuildContext context}) {
       alignment: Alignment.bottomCenter,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: const <Widget>[
+        children: <Widget>[
           Text(
             'Don\'t have an account ?',
             style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600),
@@ -131,7 +136,7 @@ Widget createAccountLabel({required BuildContext context}) {
             width: 10,
           ),
           Text(
-            'Register',
+            text,
             style: TextStyle(
                 color: color3, fontSize: 13, fontWeight: FontWeight.w600),
           ),
@@ -141,12 +146,86 @@ Widget createAccountLabel({required BuildContext context}) {
   );
 }
 
-Widget emailPasswordWidget(
+Widget emailPasswordWidgetLogin(
     {required TextEditingController controllerEmail, controllerPassword}) {
   return Column(
     children: <Widget>[
       entryField("Email id", controller: controllerEmail),
       entryField("Password", isPassword: true, controller: controllerPassword),
     ],
+  );
+}
+
+Widget emailPasswordWidgetRegister(
+    {required TextEditingController name,
+    required TextEditingController email,
+    required TextEditingController password,
+    required TextEditingController phone}) {
+  return Column(
+    children: <Widget>[
+      entryField("Username", controller: name),
+      entryField("Email", controller: email),
+      entryField("Phone", controller: phone),
+      entryField("Password", isPassword: true, controller: password),
+    ],
+  );
+}
+
+Widget backButton({required BuildContext context}) {
+  return InkWell(
+    onTap: () {
+      Navigator.pop(context);
+    },
+    child: Container(
+      padding: const EdgeInsets.symmetric(horizontal: 10),
+      child: Row(
+        children: <Widget>[
+          Container(
+            padding: const EdgeInsets.only(left: 0, top: 10, bottom: 10),
+            child: const Icon(Icons.keyboard_arrow_left, color: Colors.black),
+          ),
+          const Text('Back',
+              style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500))
+        ],
+      ),
+    ),
+  );
+}
+
+Widget submitButtonRegister(
+    {required UserData userData,
+    required AuthBloc bloc,
+    required GlobalKey<FormState> formKey,
+    required BuildContext context}) {
+  return InkWell(
+    onTap: () {
+      if (formKey.currentState!.validate()) {
+        bloc.add(RegisterEvent(userEntiy: userData));
+      }
+    },
+    child: Container(
+      width: MediaQuery.of(context).size.width,
+      padding: const EdgeInsets.symmetric(vertical: 15),
+      alignment: Alignment.center,
+      decoration: BoxDecoration(
+          borderRadius: const BorderRadius.all(Radius.circular(5)),
+          boxShadow: <BoxShadow>[
+            BoxShadow(
+                color: Colors.grey.shade200,
+                offset: const Offset(2, 4),
+                blurRadius: 5,
+                spreadRadius: 2)
+          ],
+          // ignore: prefer_const_constructors
+          gradient: LinearGradient(
+              begin: Alignment.centerLeft, end: Alignment.centerRight,
+              // ignore: prefer_const_literals_to_create_immutables
+              colors: [color3, Colors.yellow])),
+      // ignore: prefer_const_constructors
+      child: Text(
+        'Register Now',
+        style: const TextStyle(fontSize: 20, color: Colors.white),
+      ),
+    ),
   );
 }

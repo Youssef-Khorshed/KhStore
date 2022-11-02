@@ -6,6 +6,7 @@ import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:store/Core/error.dart';
 import 'package:store/Core/strings.dart';
+import 'package:store/Features/auth/Domain/Entity/user.dart';
 import 'package:store/Features/product/Domain/Entities/categories/Categoty.dart';
 import 'package:store/Features/product/Domain/Entities/banner/banner.dart';
 import 'package:store/Features/product/Domain/Entities/product/insidedata.dart';
@@ -14,7 +15,7 @@ import 'package:store/Features/product/Domain/UseCases/getbanner.dart';
 import 'package:store/Features/product/Domain/UseCases/getProducts.dart';
 import 'package:store/Features/product/Domain/UseCases/getcategories.dart';
 import 'package:store/Features/product/Domain/UseCases/getcategory.dart';
-
+import 'package:store/Features/product/Domain/UseCases/getuserdata.dart';
 import '../../../../../../Core/getFailure.dart';
 part 'prodcuts_event.dart';
 part 'prodcuts_state.dart';
@@ -24,16 +25,21 @@ class ProdcutsBloc extends Bloc<ProdcutsEvent, ProdcutsState> {
   GetCategoriesUseCase getCategoriesUseCase;
   GetBannerUseCase getBannerUseCase;
   GetCategoryUseCase categoryUseCase;
+  UserDataUsecase userDataUsecase;
   List<Category> categories = [];
   List<InsideData> offerproducts = [];
   List<InsideData> some_offerproducts = [];
+  List<InsideData> category_items = [];
   List<Banner> banneritems = [];
   int bannerindex = 0;
+  int productItemindex = 0;
+  UserEntiy? userinfo;
   ProdcutsBloc(
       {required this.getproductUsecase,
       required this.getCategoriesUseCase,
       required this.getBannerUseCase,
-      required this.categoryUseCase})
+      required this.categoryUseCase,
+      required this.userDataUsecase})
       : super(ProdcutsInitial()) {
     // on<AddProductEvent>(addproduct);
     // on<DeleteProductEvent>(deleteproduct);
@@ -43,6 +49,8 @@ class ProdcutsBloc extends Bloc<ProdcutsEvent, ProdcutsState> {
     on<GetCategoriesEvent>(getcategories);
     on<GetBannerEvent>(getbanner);
     on<UpdateBannerIndextEvent>(updatebannerindex);
+    on<UpdateProductIndextEvent>(updateproductindex);
+    on<GetUserDataEvent>(getuserdata);
   }
 
   FutureOr<void> getproducts(
@@ -104,14 +112,36 @@ class ProdcutsBloc extends Bloc<ProdcutsEvent, ProdcutsState> {
     value.fold((failure) {
       emit(GetCategoryFail(message: getfailure(failure: failure)));
     }, (products) {
+      category_items = products;
       emit(GetCategorySuccess(
-          products: products, message: getcategoriesSuccess));
+          title: event.title,
+          products: products,
+          message: getcategoriesSuccess));
     });
   }
 
   FutureOr<void> updatebannerindex(
       UpdateBannerIndextEvent event, Emitter<ProdcutsState> emit) {
     bannerindex = event.index;
+    emit(UpdatedBannerIndexState(index: event.index));
+  }
+
+  FutureOr<void> getuserdata(
+      GetUserDataEvent event, Emitter<ProdcutsState> emit) async {
+    emit(LoadingProducts());
+    final res = await userDataUsecase.call();
+    res.fold((fail) {
+      emit(GetUserDataFailState(message: getfailure(failure: fail)));
+    }, (userEntiy) {
+      userinfo = userEntiy;
+      print(userinfo);
+      emit(GetUserDataState(userEntiy: userinfo));
+    });
+  }
+
+  FutureOr<void> updateproductindex(
+      UpdateProductIndextEvent event, Emitter<ProdcutsState> emit) {
+    productItemindex = event.index;
     emit(UpdatedBannerIndexState(index: event.index));
   }
 }
