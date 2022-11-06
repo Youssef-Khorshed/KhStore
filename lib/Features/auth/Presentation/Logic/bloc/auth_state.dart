@@ -9,10 +9,26 @@ class AuthInitial extends AuthState {
   List<Object?> get props => [];
 }
 
-class Login_Register_Success_State extends AuthState {
+class Registe_Success_State extends AuthState {
   UserEntiy entiy;
   bool change;
-  Login_Register_Success_State({required this.entiy, required this.change});
+  Registe_Success_State({required this.entiy, required this.change});
+  @override
+  List<Object?> get props => [entiy];
+}
+
+class Login_Success_State extends AuthState {
+  UserEntiy entiy;
+  bool change;
+  Login_Success_State({required this.entiy, required this.change});
+  @override
+  List<Object?> get props => [entiy];
+}
+
+class Update_Success_State extends AuthState {
+  UserEntiy entiy;
+  bool change;
+  Update_Success_State({required this.entiy, required this.change});
   @override
   List<Object?> get props => [entiy];
 }
@@ -24,10 +40,28 @@ class LoadingAuth extends AuthState {
   List<Object?> get props => [change];
 }
 
-class Login_Register_Failure_State extends AuthState {
+class AuthFailState extends AuthState {
   String message;
   bool change;
-  Login_Register_Failure_State({required this.message, required this.change});
+  AuthFailState({required this.message, required this.change});
+  @override
+  List<Object?> get props => [message];
+}
+
+class LogoutSuccess extends AuthState {
+  String message;
+  LogoutSuccess({
+    required this.message,
+  });
+  @override
+  List<Object?> get props => [message];
+}
+
+class ForgetPasswordSuccess extends AuthState {
+  String message;
+  ForgetPasswordSuccess({
+    required this.message,
+  });
   @override
   List<Object?> get props => [message];
 }

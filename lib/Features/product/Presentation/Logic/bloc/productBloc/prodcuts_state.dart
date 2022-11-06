@@ -69,7 +69,7 @@ class GetCategoriesFail extends ProdcutsState {
 }
 
 class GetBannerSuccess extends ProdcutsState {
-  List<Banner> products;
+  List<BannerData> products;
   String message;
   GetBannerSuccess({required this.products, required this.message});
   @override

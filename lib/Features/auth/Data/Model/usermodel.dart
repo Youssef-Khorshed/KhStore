@@ -7,7 +7,8 @@ class UserModel extends UserEntiy {
 
   factory UserModel.fromJson(Map<String, dynamic> json) {
     return UserModel(
-        data: UserinfoModel.fromJson(json['data']),
+        data:
+            json['data'] != null ? UserinfoModel.fromJson(json['data']) : null,
         message: json['message'],
         status: json['status']);
   }

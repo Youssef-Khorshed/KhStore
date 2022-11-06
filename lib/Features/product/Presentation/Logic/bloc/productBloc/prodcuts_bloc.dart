@@ -30,7 +30,7 @@ class ProdcutsBloc extends Bloc<ProdcutsEvent, ProdcutsState> {
   List<InsideData> offerproducts = [];
   List<InsideData> some_offerproducts = [];
   List<InsideData> category_items = [];
-  List<Banner> banneritems = [];
+  List<BannerData> banneritems = [];
   int bannerindex = 0;
   int productItemindex = 0;
   UserEntiy? userinfo;
@@ -41,9 +41,6 @@ class ProdcutsBloc extends Bloc<ProdcutsEvent, ProdcutsState> {
       required this.categoryUseCase,
       required this.userDataUsecase})
       : super(ProdcutsInitial()) {
-    // on<AddProductEvent>(addproduct);
-    // on<DeleteProductEvent>(deleteproduct);
-    // on<UpdateProductEvent>(updateprodcuts);
     on<GetProdcutsEvent>(getproducts);
     on<GetCategoryEvent>(getcategory);
     on<GetCategoriesEvent>(getcategories);

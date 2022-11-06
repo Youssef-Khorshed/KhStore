@@ -63,7 +63,7 @@ class ProductRepoImp extends ProductRepo {
   // }
 
   @override
-  Future<Either<Failure, List<Banner>>> getbanner() async {
+  Future<Either<Failure, List<BannerData>>> getbanner() async {
     if (await connection.isConnected) {
       try {
         return Right(await remote.getbanner());

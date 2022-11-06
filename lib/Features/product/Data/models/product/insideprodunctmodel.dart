@@ -14,7 +14,7 @@ class InSideProductModel extends InsideData {
       required super.inFavorites,
       required super.inCart});
   static InSideProductModel fromJson(Map<String, dynamic> json) {
-    List<dynamic> imgs = json['images'];
+    List<dynamic> imgs = json['images'] ?? [];
     final images = imgs.map((e) => e.toString()).toList();
     return InSideProductModel(
         id: json['id'],

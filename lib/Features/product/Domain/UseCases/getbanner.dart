@@ -6,7 +6,7 @@ import '../Repositories/product.dart';
 class GetBannerUseCase {
   ProductRepo repo;
   GetBannerUseCase({required this.repo});
-  Future<Either<Failure, List<Banner>>> call() async {
+  Future<Either<Failure, List<BannerData>>> call() async {
     return await repo.getbanner();
   }
 }

@@ -5,7 +5,8 @@ import '../../../../Core/error.dart';
 class UpdateCartUsecase {
   CartRepo repo;
   UpdateCartUsecase({required this.repo});
-  Future<Either<Failure, String>> call({required int cartItemId}) async {
-    return await repo.updateCart(cartItemId: cartItemId);
+  Future<Either<Failure, String>> call(
+      {required int cartItemId, required int quantity}) async {
+    return await repo.updateCart(cartItemId: cartItemId, quantity: quantity);
   }
 }

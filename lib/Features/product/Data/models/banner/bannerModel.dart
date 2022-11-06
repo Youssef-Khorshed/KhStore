@@ -1,6 +1,6 @@
 import 'package:store/Features/product/Domain/Entities/banner/banner.dart';
 
-class BannerModel extends Banner {
+class BannerModel extends BannerData {
   BannerModel(
       {required super.id,
       required super.image,

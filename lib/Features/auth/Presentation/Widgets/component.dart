@@ -7,7 +7,10 @@ import '../../Domain/Entity/userinfo.dart';
 import 'signup.dart';
 
 Widget entryField(String title,
-    {bool isPassword = false, required TextEditingController controller}) {
+    {bool isPassword = false,
+    bool isvalid = true,
+    required TextEditingController controller,
+    String? hint}) {
   return Container(
     margin: EdgeInsets.symmetric(vertical: 10),
     child: Column(
@@ -23,9 +26,10 @@ Widget entryField(String title,
         TextFormField(
             controller: controller,
             keyboardType: TextInputType.text,
-            validator: validation(),
+            validator: isvalid ? validation() : null,
             obscureText: isPassword,
             decoration: InputDecoration(
+                hintText: hint,
                 border: InputBorder.none,
                 fillColor: Color(0xfff3f3f4),
                 filled: true))
@@ -40,44 +44,6 @@ String? Function(String?)? validation() {
       return 'Please enter some text';
     }
   };
-}
-
-Widget submitButton({
-  required AuthBloc bloc,
-  required String email,
-  required String password,
-  required BuildContext context,
-  required GlobalKey<FormState> formKey,
-}) {
-  return InkWell(
-    onTap: () {
-      if (formKey.currentState!.validate()) {
-        bloc.add(LoginEvent(email: email, password: password));
-      }
-    },
-    child: Container(
-      width: MediaQuery.of(context).size.width,
-      padding: EdgeInsets.symmetric(vertical: 15),
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(5)),
-          boxShadow: <BoxShadow>[
-            BoxShadow(
-                color: Colors.grey.shade200,
-                offset: Offset(2, 4),
-                blurRadius: 5,
-                spreadRadius: 2)
-          ],
-          gradient: LinearGradient(
-              begin: Alignment.centerLeft,
-              end: Alignment.centerRight,
-              colors: const [color3, Colors.yellow])),
-      child: Text(
-        bloc.change ? 'Login' : 'Please wait....',
-        style: TextStyle(fontSize: 20, color: Colors.white),
-      ),
-    ),
-  );
 }
 
 Widget divider() {
@@ -111,6 +77,45 @@ Widget divider() {
         ),
       ],
     ),
+  );
+}
+
+Widget submitButton({
+  required AuthBloc bloc,
+  required String email,
+  required String password,
+  required BuildContext context,
+  required GlobalKey<FormState> formKey,
+}) {
+  return Container(
+    width: MediaQuery.of(context).size.width,
+    padding: EdgeInsets.symmetric(vertical: 15),
+    alignment: Alignment.center,
+    decoration: BoxDecoration(
+        borderRadius: BorderRadius.all(Radius.circular(5)),
+        boxShadow: <BoxShadow>[
+          BoxShadow(
+              color: Colors.grey.shade200,
+              offset: Offset(2, 4),
+              blurRadius: 5,
+              spreadRadius: 2)
+        ],
+        gradient: LinearGradient(
+            begin: Alignment.centerLeft,
+            end: Alignment.centerRight,
+            colors: const [color3, Colors.yellow])),
+    child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+            elevation: 0, backgroundColor: Colors.transparent),
+        onPressed: () {
+          if (formKey.currentState!.validate()) {
+            bloc.add(LoginEvent(email: email, password: password));
+          }
+        },
+        child: Text(
+          'Login',
+          style: TextStyle(fontSize: 20, color: Colors.white),
+        )),
   );
 }
 

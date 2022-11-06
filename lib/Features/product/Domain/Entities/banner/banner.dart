@@ -3,13 +3,13 @@
 import 'package:equatable/equatable.dart';
 
 // ignore: must_be_immutable
-class Banner extends Equatable {
+class BannerData extends Equatable {
   int? id;
   String? image;
   Null category;
   Null product;
 
-  Banner(
+  BannerData(
       {required this.id,
       required this.image,
       required this.category,

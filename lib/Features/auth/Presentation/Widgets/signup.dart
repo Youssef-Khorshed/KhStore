@@ -93,9 +93,8 @@ class _SignUpPageState extends State<SignUpPage> {
         );
       },
       listener: (context, state) {
-        final b = context.read<AuthBloc>();
-        if (state is Login_Register_Success_State) {}
-        if (state is Login_Register_Failure_State) {}
+        if (state is Registe_Success_State) {}
+        if (state is AuthFailState) {}
       },
     );
   }

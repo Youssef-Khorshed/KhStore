@@ -9,7 +9,7 @@ import '../../../../Core/error.dart';
 abstract class ProductRepo {
   // Future<Either<Failure, Unit>> addproduct({required Product product});
   Future<Either<Failure, List<InsideData>>> getAllproducts();
-  Future<Either<Failure, List<Banner>>> getbanner();
+  Future<Either<Failure, List<BannerData>>> getbanner();
   Future<Either<Failure, List<Category>>> getcategories();
   Future<Either<Failure, List<InsideData>>> getcategory({required int id});
   Future<Either<Failure, UserEntiy>> getuserdata();

@@ -1,98 +1,106 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:store/Core/ReuseableComponent/navigation.dart';
+import 'package:store/Core/colors.dart';
 import 'package:store/Core/strings.dart';
-import '../../../../../Core/ReuseableComponent/pageviewimg.dart';
-import '../Home/home.dart';
+import 'package:store/Features/auth/Presentation/Widgets/login.dart';
 
-class PAgeView extends StatefulWidget {
-  const PAgeView({Key? key}) : super(key: key);
+class Pageviews extends StatefulWidget {
+  List<Widget> images = [
+    Image.asset(
+      'assets/p1.png',
+      fit: BoxFit.fill,
+    ),
+    Image.asset('assets/p2.png', fit: BoxFit.fill),
+    Image.asset(
+      'assets/p3.png',
+      fit: BoxFit.fill,
+    )
+  ];
+  Pageviews({super.key});
 
   @override
-  State<PAgeView> createState() => _PAgeViewState();
+  State<Pageviews> createState() => _PageviewsState();
 }
 
-class _PAgeViewState extends State<PAgeView> {
-  List<Image> images = [];
-  CircleAvatar shape1 = const CircleAvatar(
-    backgroundColor: Colors.amber,
-    radius: 5,
-  );
-  CircleAvatar shape2 = const CircleAvatar(
-    backgroundColor: Colors.grey,
-    radius: 5,
-  );
-  int index = 0;
+class _PageviewsState extends State<Pageviews> {
+  late PageController _controller;
+  int _currentindex = 0;
+  @override
   void initState() {
-    images = [
-      pageViewImage(img: pageviewImg1),
-      pageViewImage(img: pageviewImg2),
-      pageViewImage(img: pageviewImg3)
-    ];
+    _controller = PageController(initialPage: 0, viewportFraction: 1);
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(builder: (context, constrains) {
-      return ListView(
+    final h = MediaQuery.of(context).size.height;
+    return Scaffold(
+      backgroundColor: Color(0xFFFAFAFA),
+      appBar: AppBar(
+        title: Text(
+          'Kh Store',
+          style: GoogleFonts.lobster(color: color1),
+        ),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        actions: [
+          TextButton(
+              onPressed: () async {
+                final pref = await SharedPreferences.getInstance();
+                await pref.setBool(pageviewkey, false);
+                animated_navigation(context: context, widget: LoginPage());
+              },
+              child: Text('Skip'))
+        ],
+      ),
+      body: ListView(
+        // ignore: prefer_const_literals_to_create_immutables
         children: [
-          Stack(
-            children: [
-              Container(
-                  width: double.infinity, //double.infinity,
-                  height: constrains.maxHeight,
-                  child: images[index]),
-              Positioned(
-                // ignore: sort_child_properties_last
-                child: TextButton(
-                  onPressed: () {
-                    setState(() {
-                      if (index < 2)
-                        index++;
-                      else if (index == 2) {
-                        animated_navigation(context: context, widget: Home());
-                      }
-                    });
-                  },
-                  // ignore: prefer_const_constructors
-                  child: Text(
-                    'Next',
-                    style: TextStyle(color: Colors.amber),
-                  ),
+          // ignore: prefer_const_constructors
+          SizedBox(
+            height: h / 1.2,
+            child: PageView(
+              // ignore: sort_child_properties_last
+              children: widget.images.map((e) {
+                return Container(
+                  child: e,
+                );
+              }).toList(),
+              controller: _controller,
+              reverse: true,
+              onPageChanged: (value) {
+                setState(() {
+                  _currentindex = value;
+                });
+              },
+            ),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: widget.images.map((url) {
+              int index = widget.images.indexOf(url);
+              return Container(
+                width: 8,
+                height: 8,
+                // ignore: prefer_const_constructors
+                margin: EdgeInsets.symmetric(
+                  vertical: 10,
+                  horizontal: 3,
                 ),
-                bottom: 15,
-                left: constrains.maxWidth / 1.3,
-              ),
-              Positioned(
-                bottom: 15,
-                left: 20,
-                child: TextButton(
-                  onPressed: () {
-                    setState(() {
-                      if (index > 0) index--;
-                    });
-                  },
-                  child: Text(
-                    'Previous',
-                    style: TextStyle(color: Colors.amber),
-                  ),
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: _currentindex == index
+                      ? const Color.fromRGBO(0, 0, 0, 0.9)
+                      : const Color.fromRGBO(0, 0, 0, 0.4),
                 ),
-              ),
-              Positioned(
-                bottom: 30,
-                left: constrains.maxWidth / 2.3,
-                child: Wrap(
-                  spacing: 5,
-                  children: [
-                    index == 0 ? shape1 : shape2,
-                    index == 1 ? shape1 : shape2,
-                    index == 2 ? shape1 : shape2,
-                  ],
-                ),
-              )
-            ],
+              );
+            }).toList(),
           )
         ],
-      );
-    });
+      ),
+    );
   }
 }

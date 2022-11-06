@@ -1,32 +1,46 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:animated_theme_switcher/animated_theme_switcher.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:store/Core/ReuseableComponent/navigation.dart';
 import 'package:store/Core/ReuseableComponent/networkimage.dart';
+import 'package:store/Core/app.dart';
 import 'package:store/Core/colors.dart';
+import 'package:store/Core/strings.dart';
+import 'package:store/Core/theme.dart';
+import 'package:store/Features/auth/Presentation/Widgets/profile.dart';
+import 'package:store/Features/product/Presentation/widget/Settings/settings.dart';
+import 'package:store/Features/cart/presentation/logic/bloc/cart_bloc.dart';
+import 'package:store/Features/cart/presentation/widgets/cart.dart';
+import 'package:store/Features/favourite/presentation/logic/bloc/fav_bloc.dart';
+import 'package:store/Features/favourite/presentation/widgets/favpage.dart';
+import 'package:store/Features/product/Presentation/widget/Home/homepage/discount.dart';
+import 'package:store/Features/product/Presentation/widget/Home/loading_widget.dart';
 import 'package:store/Features/product/Presentation/widget/Home/product_list_widget.dart';
-import 'package:store/Features/product/Presentation/widget/categoryitems.dart';
 import '../../Logic/bloc/productBloc/prodcuts_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class Home extends StatelessWidget {
+import 'homepage/carrosalpage.dart';
+
+class Home extends StatefulWidget {
   Home({super.key});
 
   @override
+  State<Home> createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
+  @override
   Widget build(BuildContext context) {
+    final cartbloc = context.watch<CartBloc>();
+    final favbloc = context.watch<FavBloc>();
     return BlocConsumer<ProdcutsBloc, ProdcutsState>(
       builder: (context, state) {
         final bloc = context.watch<ProdcutsBloc>();
-        return bloc.userinfo == null
-            ? Scaffold(
-                appBar: AppBar(
-                  backgroundColor: Colors.transparent,
-                  elevation: 0,
-                ),
-                body: Center(child: CircularProgressIndicator()),
-              )
+        return bloc.userinfo == null || (state is LoadingProducts)
+            ? LoadingWidget()
             : Scaffold(
                 appBar: AppBar(
                     backgroundColor: Colors.transparent,
@@ -72,57 +86,114 @@ class Home extends StatelessWidget {
                           ,
                           Padding(
                             padding: const EdgeInsets.all(20.0),
-                            child: Column(
+                            child: Stack(
                               children: [
-                                Row(
-                                  // ignore: prefer_const_literals_to_create_immutables
+                                Column(
                                   children: [
-                                    Icon(Icons.account_circle),
-                                    SizedBox(
-                                      width: 10,
+                                    ElevatedButton(
+                                      onPressed: () {
+                                        navigation(
+                                            context: context, page: Profile());
+                                      },
+                                      style: ElevatedButton.styleFrom(
+                                          backgroundColor: Colors.transparent,
+                                          elevation: 0.0),
+                                      child: Row(
+                                        // ignore: prefer_const_literals_to_create_immutables
+                                        children: [
+                                          Icon(Icons.account_circle),
+                                          SizedBox(
+                                            width: 10,
+                                          ),
+                                          Text('Profile')
+                                        ],
+                                      ),
                                     ),
-                                    Text('Profile')
+                                    SizedBox(
+                                      height: 15,
+                                    ),
+                                    ElevatedButton(
+                                      onPressed: () {
+                                        favbloc.add(GetToFav(productid: null));
+                                        navigation(
+                                            context: context, page: FavPage());
+                                      },
+                                      style: ElevatedButton.styleFrom(
+                                          backgroundColor: Colors.transparent,
+                                          elevation: 0.0),
+                                      child: Row(
+                                        // ignore: prefer_const_literals_to_create_immutables
+                                        children: [
+                                          Icon(Icons.favorite),
+                                          SizedBox(
+                                            width: 15,
+                                          ),
+                                          Text('Favourite')
+                                        ],
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 15,
+                                    ),
+                                    ElevatedButton(
+                                        onPressed: () {
+                                          cartbloc.add(
+                                              GetCartEvent(productid: null));
+                                          navigation(
+                                              context: context,
+                                              page: CartPage());
+                                        },
+                                        style: ElevatedButton.styleFrom(
+                                            backgroundColor: Colors.transparent,
+                                            elevation: 0.0),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          // ignore: prefer_const_literals_to_create_immutables
+                                          children: [
+                                            Icon(Icons.shopping_cart),
+                                            SizedBox(
+                                              width: 15,
+                                            ),
+                                            Text('Cart')
+                                          ],
+                                        )),
+                                    SizedBox(
+                                      height: 15,
+                                    ),
+                                    ElevatedButton(
+                                      onPressed: () {
+                                        navigation(
+                                            context: context, page: Settings());
+                                      },
+                                      style: ElevatedButton.styleFrom(
+                                          backgroundColor: Colors.transparent,
+                                          elevation: 0.0),
+                                      child: Row(
+                                        // ignore: prefer_const_literals_to_create_immutables
+                                        children: [
+                                          Icon(Icons.settings),
+                                          SizedBox(
+                                            width: 15,
+                                          ),
+                                          Text('Settings')
+                                        ],
+                                      ),
+                                    ),
                                   ],
                                 ),
-                                SizedBox(
-                                  height: 15,
-                                ),
-                                Row(
-                                  // ignore: prefer_const_literals_to_create_immutables
-                                  children: [
-                                    Icon(Icons.favorite),
-                                    SizedBox(
-                                      width: 15,
-                                    ),
-                                    Text('Favourite')
-                                  ],
-                                ),
-                                SizedBox(
-                                  height: 15,
-                                ),
-                                Row(
-                                  // ignore: prefer_const_literals_to_create_immutables
-                                  children: [
-                                    Icon(Icons.shopping_cart),
-                                    SizedBox(
-                                      width: 15,
-                                    ),
-                                    Text('Cart')
-                                  ],
-                                ),
-                                SizedBox(
-                                  height: 15,
-                                ),
-                                Row(
-                                  // ignore: prefer_const_literals_to_create_immutables
-                                  children: [
-                                    Icon(Icons.settings),
-                                    SizedBox(
-                                      width: 15,
-                                    ),
-                                    Text('Settings')
-                                  ],
-                                ),
+                                ThemeSwitcher.withTheme(
+                                  builder: (_, switcher, theme) => TextButton(
+                                      onPressed: () {
+                                        switcher.changeTheme(
+                                          theme: theme.brightness ==
+                                                  Brightness.light
+                                              ? ThemeClass.darkTheme
+                                              : ThemeClass.lightTheme,
+                                        );
+                                      },
+                                      child: Text('Theme')),
+                                )
                               ],
                             ),
                           )
@@ -143,51 +214,10 @@ class Home extends StatelessWidget {
                                 height: 150,
                                 color: color_grey,
                               )
-                            : Container(
-                                height: 200,
-                                child: CarouselSlider.builder(
-                                    itemCount: bloc.banneritems.length,
-                                    itemBuilder: (context, index, realIndex) {
-                                      bloc.add(UpdateBannerIndextEvent(
-                                          index: index));
-                                      return Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: ClipRRect(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                          child: image(
-                                              url: bloc
-                                                  .banneritems[index].image!),
-                                        ),
-                                      );
-                                    },
-                                    options: CarouselOptions(autoPlay: true)),
-                              ),
-                        Container(
-                          padding: EdgeInsets.only(left: 70),
-                          height: 20,
-                          child: ListView.separated(
-                            scrollDirection: Axis.horizontal,
-                            itemBuilder: (context, index) {
-                              return index == bloc.bannerindex
-                                  ? CircleAvatar(
-                                      radius: 3,
-                                      backgroundColor: color1,
-                                    )
-                                  : CircleAvatar(
-                                      radius: 3,
-                                      backgroundColor: color_grey2,
-                                    );
-                            },
-                            itemCount: bloc.banneritems.length,
-                            separatorBuilder: (context, index) => SizedBox(
-                              width: 25,
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
+                            : SizedBox(
+                                child: CarouselWithDotsPage(
+                                imgList: bloc.banneritems,
+                              )),
                         Text(
                           'Categories',
                           style: GoogleFonts.averageSans(
@@ -241,17 +271,17 @@ class Home extends StatelessWidget {
                         SizedBox(
                           height: 5,
                         ),
-                        Stack(
-                          children: [
-                            Container(
-                              height: 200,
-                              padding: EdgeInsets.symmetric(horizontal: 10),
-                              child: ListView.separated(
-                                separatorBuilder: (context, index) =>
-                                    SizedBox(width: 10),
-                                itemCount: bloc.some_offerproducts.length,
-                                itemBuilder: (context, index) {
-                                  return ClipRRect(
+                        Container(
+                          height: 200,
+                          padding: EdgeInsets.symmetric(horizontal: 10),
+                          child: ListView.separated(
+                            separatorBuilder: (context, index) =>
+                                SizedBox(width: 10),
+                            itemCount: bloc.some_offerproducts.length,
+                            itemBuilder: (context, index) {
+                              return Stack(
+                                children: [
+                                  ClipRRect(
                                     borderRadius: BorderRadius.circular(30),
                                     child: Card(
                                       elevation: 1,
@@ -281,21 +311,16 @@ class Home extends StatelessWidget {
                                         ),
                                       ),
                                     ),
-                                  );
-                                },
-                                scrollDirection: Axis.horizontal,
-                              ),
-                            ),
-                            Positioned(
-                                // ignore: sort_child_properties_last
-                                child: Text(
-                                  'view More',
-                                  style: GoogleFonts.averageSans(
-                                      color: color3, fontSize: 15),
-                                ),
-                                bottom: 20,
-                                right: 10),
-                          ],
+                                  ),
+                                  DiscountText(
+                                      discount: bloc
+                                          .some_offerproducts[index].discount),
+                                  oldpriceText(index: index, cal: bloc),
+                                ],
+                              );
+                            },
+                            scrollDirection: Axis.horizontal,
+                          ),
                         ),
                       ],
                     ),
@@ -314,5 +339,24 @@ class Home extends StatelessWidget {
         }
       },
     );
+  }
+
+  Widget oldpriceText({required int index, required ProdcutsBloc cal}) {
+    return cal.some_offerproducts[index].discount > 0
+        ? Positioned(
+            bottom: 2,
+            right: 42,
+            child: Text(
+              '${cal.some_offerproducts[index].oldPrice} EGP',
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              // ignore: prefer_const_constructors
+              style: TextStyle(
+                color: color_grey,
+                fontSize: 15,
+                decoration: TextDecoration.lineThrough,
+              ),
+            ))
+        : Container();
   }
 }

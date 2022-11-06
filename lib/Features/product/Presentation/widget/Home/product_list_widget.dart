@@ -1,11 +1,17 @@
 // ignore_for_file: unnecessary_string_interpolations
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:store/Core/ReuseableComponent/navigation.dart';
 import 'package:store/Core/ReuseableComponent/networkimage.dart';
 import 'package:store/Core/colors.dart';
+import 'package:store/Features/favourite/presentation/logic/bloc/fav_bloc.dart';
 import 'package:store/Features/product/Domain/Entities/product/insidedata.dart';
+import 'package:store/Features/product/Presentation/Logic/bloc/productBloc/prodcuts_bloc.dart';
+import 'package:store/Features/product/Presentation/widget/Home/loading_widget.dart';
 import 'package:store/Features/product/Presentation/widget/Home/product.dart';
+
+import '../../../../cart/presentation/logic/bloc/cart_bloc.dart';
 
 class PostListWidget extends StatelessWidget {
   final List<InsideData> items;
@@ -18,19 +24,26 @@ class PostListWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-          title: Text('$title'),
-          leading: IconButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              icon: const Icon(Icons.arrow_back))),
-      body: grid(),
-    );
+    final cal = BlocProvider.of<CartBloc>(context);
+    final productbloc = BlocProvider.of<ProdcutsBloc>(context);
+    final blocfav = BlocProvider.of<FavBloc>(context);
+
+    // ignore: unrelated_type_equality_checks
+    return productbloc.state is LoadingProducts
+        ? LoadingWidget()
+        : Scaffold(
+            appBar: AppBar(
+                title: Text('$title'),
+                leading: IconButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    icon: const Icon(Icons.arrow_back))),
+            body: grid(cal: cal, blocfav: blocfav),
+          );
   }
 
-  Widget grid() {
+  Widget grid({required CartBloc cal, required FavBloc blocfav}) {
     return GridView.builder(
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           childAspectRatio: 0.7,
@@ -47,11 +60,15 @@ class PostListWidget extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.all(15.0),
             child: InkWell(
-              onTap: () => navigation(
-                  context: context,
-                  page: ProductPage(
-                    product: items[index],
-                  )),
+              onTap: () {
+                cal.add(GetCartEvent(productid: items[index].id));
+                blocfav.add(GetToFav(productid: items[index].id));
+                navigation(
+                    context: context,
+                    page: ProductPage(
+                      product: items[index],
+                    ));
+              },
               child: Stack(
                 children: [
                   Hero(

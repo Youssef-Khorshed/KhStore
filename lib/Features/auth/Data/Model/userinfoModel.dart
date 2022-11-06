@@ -1,3 +1,4 @@
+import 'package:store/Core/strings.dart';
 import 'package:store/Features/auth/Domain/Entity/userinfo.dart';
 
 class UserinfoModel extends UserData {
@@ -17,7 +18,7 @@ class UserinfoModel extends UserData {
         phone: json['phone'],
         id: json['id'],
         password: '',
-        image: json['image'],
+        image: personprofile, //json['image'] ?? egyptflag,
         token: json['token']);
   }
 }
