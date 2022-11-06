@@ -1,15 +1,11 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:animated_theme_switcher/animated_theme_switcher.dart';
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:store/Core/ReuseableComponent/navigation.dart';
 import 'package:store/Core/ReuseableComponent/networkimage.dart';
-import 'package:store/Core/app.dart';
 import 'package:store/Core/colors.dart';
-import 'package:store/Core/strings.dart';
-import 'package:store/Core/theme.dart';
+import 'package:store/Core/theme/theme_cubit.dart';
 import 'package:store/Features/auth/Presentation/Widgets/profile.dart';
 import 'package:store/Features/product/Presentation/widget/Settings/settings.dart';
 import 'package:store/Features/cart/presentation/logic/bloc/cart_bloc.dart';
@@ -36,6 +32,7 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     final cartbloc = context.watch<CartBloc>();
     final favbloc = context.watch<FavBloc>();
+    final theme = context.watch<ThemeCubit>();
     return BlocConsumer<ProdcutsBloc, ProdcutsState>(
       builder: (context, state) {
         final bloc = context.watch<ProdcutsBloc>();
@@ -77,122 +74,161 @@ class _HomeState extends State<Home> {
                       ),
                       Column(
                         children: [
-                          Text(bloc.userinfo!.data!.name!),
+                          Text(
+                            bloc.userinfo!.data!.name!,
+                            style: Theme.of(context).textTheme.displayMedium,
+                          ),
                           SizedBox(
                             height: 10,
                           ),
-                          Text(bloc.userinfo!.data!.phone!)
+                          Text(
+                            bloc.userinfo!.data!.phone!,
+                            style: Theme.of(context).textTheme.displayMedium,
+                          )
                           // ignore: prefer_const_literals_to_create_immutables
                           ,
                           Padding(
                             padding: const EdgeInsets.all(20.0),
-                            child: Stack(
+                            child: Column(
                               children: [
-                                Column(
-                                  children: [
-                                    ElevatedButton(
-                                      onPressed: () {
-                                        navigation(
-                                            context: context, page: Profile());
-                                      },
-                                      style: ElevatedButton.styleFrom(
-                                          backgroundColor: Colors.transparent,
-                                          elevation: 0.0),
-                                      child: Row(
-                                        // ignore: prefer_const_literals_to_create_immutables
-                                        children: [
-                                          Icon(Icons.account_circle),
-                                          SizedBox(
-                                            width: 10,
-                                          ),
-                                          Text('Profile')
-                                        ],
+                                ElevatedButton(
+                                  onPressed: () {
+                                    navigation(
+                                        context: context, page: Profile());
+                                  },
+                                  style: Theme.of(context)
+                                      .elevatedButtonTheme
+                                      .style,
+                                  child: Row(
+                                    // ignore: prefer_const_literals_to_create_immutables
+                                    children: [
+                                      Icon(Icons.account_circle,
+                                          color: Theme.of(context)
+                                              .iconTheme
+                                              .color),
+                                      SizedBox(
+                                        width: 10,
                                       ),
-                                    ),
-                                    SizedBox(
-                                      height: 15,
-                                    ),
-                                    ElevatedButton(
-                                      onPressed: () {
-                                        favbloc.add(GetToFav(productid: null));
-                                        navigation(
-                                            context: context, page: FavPage());
-                                      },
-                                      style: ElevatedButton.styleFrom(
-                                          backgroundColor: Colors.transparent,
-                                          elevation: 0.0),
-                                      child: Row(
-                                        // ignore: prefer_const_literals_to_create_immutables
-                                        children: [
-                                          Icon(Icons.favorite),
-                                          SizedBox(
-                                            width: 15,
-                                          ),
-                                          Text('Favourite')
-                                        ],
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      height: 15,
-                                    ),
-                                    ElevatedButton(
-                                        onPressed: () {
-                                          cartbloc.add(
-                                              GetCartEvent(productid: null));
-                                          navigation(
-                                              context: context,
-                                              page: CartPage());
-                                        },
-                                        style: ElevatedButton.styleFrom(
-                                            backgroundColor: Colors.transparent,
-                                            elevation: 0.0),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          // ignore: prefer_const_literals_to_create_immutables
-                                          children: [
-                                            Icon(Icons.shopping_cart),
-                                            SizedBox(
-                                              width: 15,
-                                            ),
-                                            Text('Cart')
-                                          ],
-                                        )),
-                                    SizedBox(
-                                      height: 15,
-                                    ),
-                                    ElevatedButton(
-                                      onPressed: () {
-                                        navigation(
-                                            context: context, page: Settings());
-                                      },
-                                      style: ElevatedButton.styleFrom(
-                                          backgroundColor: Colors.transparent,
-                                          elevation: 0.0),
-                                      child: Row(
-                                        // ignore: prefer_const_literals_to_create_immutables
-                                        children: [
-                                          Icon(Icons.settings),
-                                          SizedBox(
-                                            width: 15,
-                                          ),
-                                          Text('Settings')
-                                        ],
-                                      ),
-                                    ),
-                                  ],
+                                      Text(
+                                        'Profile',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .displayMedium,
+                                      )
+                                    ],
+                                  ),
                                 ),
-                                ThemeSwitcher.withTheme(
-                                  builder: (_, switcher, theme) => TextButton(
-                                      onPressed: () {
-                                        switcher.changeTheme(
-                                          theme: theme.brightness ==
-                                                  Brightness.light
-                                              ? ThemeClass.darkTheme
-                                              : ThemeClass.lightTheme,
-                                        );
-                                      },
-                                      child: Text('Theme')),
+                                SizedBox(
+                                  height: 15,
+                                ),
+                                ElevatedButton(
+                                  onPressed: () {
+                                    favbloc.add(GetToFav(productid: null));
+                                    navigation(
+                                        context: context, page: FavPage());
+                                  },
+                                  style: Theme.of(context)
+                                      .elevatedButtonTheme
+                                      .style,
+                                  child: Row(
+                                    // ignore: prefer_const_literals_to_create_immutables
+                                    children: [
+                                      Icon(Icons.favorite,
+                                          color: Theme.of(context)
+                                              .iconTheme
+                                              .color),
+                                      SizedBox(
+                                        width: 15,
+                                      ),
+                                      Text(
+                                        'Favourite',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .displayMedium,
+                                      )
+                                    ],
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 15,
+                                ),
+                                ElevatedButton(
+                                    onPressed: () {
+                                      cartbloc
+                                          .add(GetCartEvent(productid: null));
+                                      navigation(
+                                          context: context, page: CartPage());
+                                    },
+                                    style: Theme.of(context)
+                                        .elevatedButtonTheme
+                                        .style,
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      // ignore: prefer_const_literals_to_create_immutables
+                                      children: [
+                                        Icon(Icons.shopping_cart,
+                                            color: Theme.of(context)
+                                                .iconTheme
+                                                .color),
+                                        SizedBox(
+                                          width: 15,
+                                        ),
+                                        Text(
+                                          'Cart',
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .displayMedium,
+                                        )
+                                      ],
+                                    )),
+                                SizedBox(
+                                  height: 15,
+                                ),
+                                ElevatedButton(
+                                  onPressed: () {
+                                    navigation(
+                                        context: context, page: Settings());
+                                  },
+                                  style: Theme.of(context)
+                                      .elevatedButtonTheme
+                                      .style,
+                                  child: Row(
+                                    // ignore: prefer_const_literals_to_create_immutables
+                                    children: [
+                                      Icon(
+                                        Icons.settings,
+                                        color:
+                                            Theme.of(context).iconTheme.color,
+                                      ),
+                                      SizedBox(
+                                        width: 15,
+                                      ),
+                                      Text(
+                                        'Settings',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .displayMedium,
+                                      )
+                                    ],
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 15,
+                                ),
+                                SwitchListTile(
+                                  title: Row(
+                                    children: [
+                                      theme.state
+                                          ? Icon(Icons.sunny)
+                                          : Icon(Icons.nightlight),
+                                      Text(' App  Mode'),
+                                    ],
+                                  ),
+                                  onChanged: (value) {
+                                    theme.switch_theme(themestate: value);
+                                  },
+                                  value: theme.state,
                                 )
                               ],
                             ),

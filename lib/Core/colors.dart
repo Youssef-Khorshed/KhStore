@@ -34,16 +34,16 @@ const int _color6 = 0xFFFCB677;
 const MaterialColor color12 = MaterialColor(
   _color12,
   <int, Color>{
-    50: Color.fromARGB(255, 56, 38, 56),
-    100: Color.fromARGB(255, 56, 38, 56),
-    200: Color.fromARGB(255, 56, 38, 56),
-    300: Color.fromARGB(255, 56, 38, 56),
-    400: Color.fromARGB(255, 56, 38, 56),
+    50: Colors.black,
+    100: Colors.black,
+    200: Colors.black,
+    300: Colors.black,
+    400: Colors.black,
     500: Color(_color12),
-    600: Color.fromARGB(255, 56, 38, 56),
-    700: Color.fromARGB(255, 56, 38, 56),
-    800: Color.fromARGB(255, 56, 38, 56),
-    900: Color.fromARGB(255, 56, 38, 56),
+    600: Colors.black,
+    700: Colors.black,
+    800: Colors.black,
+    900: Colors.black,
   },
 );
-const int _color12 = 0xFF2F1F1B;
+const int _color12 = 0xFF000000;

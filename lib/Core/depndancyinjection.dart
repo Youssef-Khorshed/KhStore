@@ -5,6 +5,7 @@ import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:store/Core/app.dart';
 import 'package:store/Core/internet.dart';
+import 'package:store/Core/theme/theme_cubit.dart';
 import 'package:store/Features/auth/Data/DataSource/local.dart';
 import 'package:store/Features/auth/Data/DataSource/remote.dart';
 import 'package:store/Features/auth/Data/repoImplement/repo.dart';
@@ -60,6 +61,8 @@ Future<void> init() async {
   db.registerFactory(() => FavBloc(addTofavUsecase: db(), getFavUseCase: db()));
   // Internet Bloc
   db.registerFactory(() => CheckInternetBlocBloc());
+  // theme Bloc
+  db.registerFactory(() => ThemeCubit());
   // Auth Bloc
   db.registerFactory(() => AuthBloc(
       loginUseCase: db(),

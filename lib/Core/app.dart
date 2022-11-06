@@ -1,14 +1,10 @@
-import 'package:animated_theme_switcher/animated_theme_switcher.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:store/Core/applocal.dart';
-import 'package:store/Core/colors.dart';
 import 'package:store/Core/depndancyinjection.dart' as db;
 import 'package:store/Core/strings.dart';
-import 'package:store/Core/theme.dart';
+import 'package:store/Core/theme/theme_cubit.dart';
 import 'package:store/Features/auth/Domain/Entity/userinfo.dart';
-import 'package:store/Features/product/Presentation/widget/Home/home.dart';
 import '../Features/auth/Presentation/Logic/bloc/auth_bloc.dart';
 import '../Features/cart/presentation/logic/bloc/cart_bloc.dart';
 import '../Features/favourite/presentation/logic/bloc/fav_bloc.dart';
@@ -25,34 +21,35 @@ class MyApp extends StatelessWidget {
     final isPlatformDark =
         WidgetsBinding.instance.window.platformBrightness == Brightness.dark;
     final initTheme =
-        isPlatformDark ? ThemeClass.darkTheme : ThemeClass.lightTheme;
+        isPlatformDark ? ThemeCubit.darkTheme : ThemeCubit.lightTheme;
     return MultiBlocProvider(
-      providers: [
-        BlocProvider(
-          create: (context) => db.db<CheckInternetBlocBloc>()
-            ..add(CheckInternetFirstTimeEvent()),
-        ),
-        BlocProvider(
-          create: (context) => db.db<AuthBloc>(),
-        ),
-        BlocProvider(
-          create: (context) => db.db<CartBloc>(),
-        ),
-        BlocProvider(create: (context) => db.db<FavBloc>()),
-        BlocProvider(
-            create: (_) => db.db<ProdcutsBloc>()
-              ..add(GetBannerEvent())
-              ..add(GetProdcutsEvent())
-              ..add(GetCategoriesEvent())
-              ..add(GetUserDataEvent())),
-      ],
-      child: ThemeProvider(
-        initTheme: ThemeData.light(),
-        builder: (p0, theme) {
+        providers: [
+          BlocProvider(
+            create: (context) => db.db<CheckInternetBlocBloc>()
+              ..add(CheckInternetFirstTimeEvent()),
+          ),
+          BlocProvider(
+            create: (context) => db.db<AuthBloc>(),
+          ),
+          BlocProvider(
+            create: (context) => db.db<CartBloc>(),
+          ),
+          BlocProvider(create: (context) => db.db<FavBloc>()),
+          BlocProvider(create: (context) => db.db<ThemeCubit>()),
+          BlocProvider(
+              create: (_) => db.db<ProdcutsBloc>()
+                ..add(GetBannerEvent())
+                ..add(GetProdcutsEvent())
+                ..add(GetCategoriesEvent())
+                ..add(GetUserDataEvent())),
+        ],
+        child: BlocBuilder<ThemeCubit, bool>(builder: (context, state) {
           return MaterialApp(
             title: 'Flutter Demo',
             debugShowCheckedModeBanner: false,
-            theme: theme,
+            theme: initTheme,
+            themeMode: state ? ThemeMode.light : ThemeMode.dark,
+            darkTheme: ThemeCubit.darkTheme,
             home: nextwidget,
             // ignore: prefer_const_literals_to_create_immutables
             localizationsDelegates: [
@@ -79,9 +76,7 @@ class MyApp extends StatelessWidget {
             },
             locale: Locale(applang, ''),
           );
-        },
-      ),
-    );
+        }));
   }
 }
 
