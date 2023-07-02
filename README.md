@@ -1,4 +1,5 @@
 # KhStore
+Feature (Auth - Payment - Check Internet - Hero Animation - Bloc pattern - Clean Architecture)
 online store for all personal requirements
 ![Screenshot 2023-07-02 224907](https://github.com/Youssef-Khorshed/KhStore/assets/66167521/2628237a-7cfc-4f50-9ea1-992b21ed2d06)
 ![Screenshot 2023-07-02 225012](https://github.com/Youssef-Khorshed/KhStore/assets/66167521/90fba58d-857e-41d7-8c45-9d8e6201a840)
