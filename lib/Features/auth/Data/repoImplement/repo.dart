@@ -1,6 +1,5 @@
 import 'package:store/Core/exception.dart';
 import 'package:store/Core/internet.dart';
-import 'package:store/Core/strings.dart';
 import 'package:store/Features/auth/Data/DataSource/local.dart';
 import 'package:store/Features/auth/Data/DataSource/remote.dart';
 import 'package:store/Features/auth/Domain/Entity/userinfo.dart';

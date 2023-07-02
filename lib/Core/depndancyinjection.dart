@@ -126,6 +126,7 @@ Future<void> init() async {
   //objects
   final sharedPreferences = await SharedPreferences.getInstance();
   final dio = Dio(BaseOptions());
+
   db.registerLazySingleton(() => sharedPreferences);
   db.registerLazySingleton<InternetConnectionChecker>(
       () => InternetConnectionChecker());

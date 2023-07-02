@@ -19,7 +19,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isPlatformDark =
-        WidgetsBinding.instance.window.platformBrightness == Brightness.dark;
+        WidgetsBinding.instance.platformDispatcher.platformBrightness ==
+            Brightness.dark;
     final initTheme =
         isPlatformDark ? ThemeCubit.darkTheme : ThemeCubit.lightTheme;
     return MultiBlocProvider(
@@ -59,22 +60,27 @@ class MyApp extends StatelessWidget {
               GlobalWidgetsLocalizations.delegate,
             ],
             // ignore: prefer_const_literals_to_create_immutables
+
             supportedLocales: [
-              const Locale('en', 'US'), // English
-              const Locale('ar', ''), // arabic
+              Locale("en", ""), // English
+              Locale("ar", ""), // arabic
             ],
 
             localeResolutionCallback: (currentLang, supportLang) {
               if (currentLang != null) {
                 for (Locale locale in supportLang) {
                   if (locale.languageCode == currentLang.languageCode) {
+                    currentLang.languageCode == "ar"
+                        ? applang = "ar"
+                        : applang = "en";
+
                     return currentLang;
                   }
                 }
               }
               return supportLang.first;
             },
-            locale: Locale(applang, ''),
+            // locale: Locale(applang, ''),
           );
         }));
   }

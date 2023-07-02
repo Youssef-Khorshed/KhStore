@@ -26,9 +26,11 @@ class AuthRemoteImp extends AuthRemote {
       {required String email, required String password}) async {
     final resopnse = await dio
         .post('${baseUrl}login', data: {"email": email, "password": password});
+
+    // try{}on ApiException catch(){}
     if (resopnse.statusCode == 200 || resopnse.data == null) {
       final res = UserModel.fromJson(resopnse.data);
-      print(res.data);
+      // print(res.data);
       return Future.value(res);
     } else {
       throw AuthException();

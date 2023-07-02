@@ -3,12 +3,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:store/Core/ReuseableComponent/navigation.dart';
+import 'package:store/Core/applocal.dart';
 import 'package:store/Core/colors.dart';
 import 'package:store/Features/auth/Presentation/Logic/bloc/auth_bloc.dart';
 import 'package:store/Features/product/Presentation/Logic/bloc/productBloc/prodcuts_bloc.dart';
 import 'package:store/Features/product/Presentation/widget/Home/home.dart';
 import 'package:store/Features/product/Presentation/widget/Home/loading_widget.dart';
-import '../../../../Core/ReuseableComponent/snackbar_message.dart';
+import '../../../../../Core/ReuseableComponent/snackbar_message.dart';
 import 'component.dart';
 
 class LoginPage extends StatefulWidget {
@@ -69,11 +70,13 @@ class _LoginPageState extends State<LoginPage> {
                       fit: BoxFit.cover,
                     ),
                     emailPasswordWidgetLogin(
+                        context: context,
                         controllerEmail: bloc.email_controller,
                         controllerPassword: bloc.password_controller),
                     const SizedBox(height: 20),
                     bloc.state is LoadingAuth
-                        ? Text('Please wait....')
+                        ? Text(
+                            getLang(context: context, key: "Please wait....")!)
                         : submitButton(
                             formKey: _formKey,
                             bloc: bloc,
@@ -82,13 +85,16 @@ class _LoginPageState extends State<LoginPage> {
                             context: context),
                     Container(
                       padding: const EdgeInsets.symmetric(vertical: 10),
-                      alignment: Alignment.centerRight,
-                      child: const Text('Forgot Password ?',
+                      alignment: Alignment.centerRight, //
+                      child: Text(
+                          '${getLang(context: context, key: "forget password")!}',
                           style: TextStyle(
                               fontSize: 14, fontWeight: FontWeight.w500)),
                     ),
                     divider(),
-                    createAccountLabel(context: context, text: 'Register'),
+                    createAccountLabel(
+                        context: context,
+                        text: getLang(context: context, key: "Register")!),
                   ],
                 ),
               ),

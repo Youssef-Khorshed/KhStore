@@ -12,6 +12,7 @@ const Color color10 = Color.fromARGB(255, 87, 169, 197);
 
 Color color_grey = Colors.grey.shade700;
 Color color_grey2 = Colors.grey;
+Color color_wthite = Colors.white;
 const MaterialColor color6 = MaterialColor(
   _color6,
   <int, Color>{

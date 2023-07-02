@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:store/Features/cart/domain/entity/cartEntity.dart';
+import 'package:store/Core/applocal.dart';
 import 'package:store/Features/product/Presentation/widget/Home/loading_widget.dart';
 import '../../../../Core/ReuseableComponent/networkimage.dart';
 import '../../../../Core/colors.dart';
+import '../../../Payment/payment.dart';
 import '../logic/bloc/cart_bloc.dart';
 
 class CartPage extends StatelessWidget {
@@ -34,7 +35,7 @@ class CartPage extends StatelessWidget {
                       Expanded(
                           child: Text(
                         textAlign: TextAlign.center,
-                        'Total Price ${bloc.carts!.data!.total}  EGP',
+                        '${getLang(context: context, key: "Total Price")} ${bloc.carts!.data!.total}  EGP',
                         style:
                             const TextStyle(fontSize: 25, color: Colors.white),
                       ))
@@ -42,8 +43,18 @@ class CartPage extends StatelessWidget {
                   ),
                 )),
             appBar: AppBar(
-              title: const Text('Cart'),
               elevation: 0,
+              actions: [
+                ElevatedButton(
+                    onPressed: () async {
+                      await PaymentHelper.makepayment(
+                          price: bloc.carts!.data!.total.toString());
+                    },
+                    child: Text(
+                      getLang(context: context, key: "Confirm Order")!,
+                      style: TextStyle(color: Colors.amber),
+                    )),
+              ],
               backgroundColor: Colors.transparent,
               leading: IconButton(
                   onPressed: () {
@@ -103,7 +114,7 @@ class CartPage extends StatelessWidget {
                 ),
                 Positioned(
                     bottom: 5,
-                    right: -2,
+                    right: -10,
                     child: IconButton(
                         onPressed: () {
                           cal.add(AddToCartEvent(

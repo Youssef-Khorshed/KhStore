@@ -40,18 +40,16 @@ dependencies:
   cupertino_icons: ^1.0.2
   equatable: ^2.0.5
   dartz: ^0.10.1
-  bloc: ^8.1.0
-  flutter_bloc: ^8.1.1
+  bloc: 
+  flutter_bloc: 
   dio: ^4.0.6
   connectivity_plus:
   shared_preferences:
   get_it: ^7.2.0
   internet_connection_checker: ^1.0.0+1
   carousel_slider: ^4.0.0
-  google_fonts: ^3.0.1
-  cached_network_image: ^3.2.2
-
-
+  google_fonts:
+  flutter_stripe: ^9.2.2
 dev_dependencies:
   flutter_test:
     sdk: flutter

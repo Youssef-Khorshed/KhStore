@@ -11,9 +11,10 @@ class ThemeCubit extends Cubit<bool> {
       scaffoldBackgroundColor: Colors.white,
       colorScheme: const ColorScheme.light(),
       textTheme: TextTheme(
-          displayLarge: GoogleFonts.roboto(color: color12, fontSize: 16),
-          displaySmall: GoogleFonts.roboto(color: color12, fontSize: 12),
-          displayMedium: GoogleFonts.roboto(color: color12, fontSize: 14)),
+        bodyLarge: GoogleFonts.roboto(color: color7, fontSize: 16),
+        bodySmall: GoogleFonts.roboto(color: color_grey, fontSize: 13),
+        bodyMedium: GoogleFonts.roboto(color: color7, fontSize: 14),
+      ),
       iconTheme: IconThemeData(color: color_grey2),
       elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
@@ -31,14 +32,15 @@ class ThemeCubit extends Cubit<bool> {
       colorScheme: const ColorScheme.dark(),
       elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
-              foregroundColor: Colors.white,
+              foregroundColor: color_wthite,
               backgroundColor: Colors.transparent,
               elevation: 0.0)),
       textTheme: TextTheme(
-          displayLarge: GoogleFonts.roboto(color: color_grey2, fontSize: 16),
-          displaySmall: GoogleFonts.roboto(color: color_grey2, fontSize: 12),
-          displayMedium: GoogleFonts.roboto(color: color_grey2, fontSize: 14)),
-      iconTheme: IconThemeData(color: Colors.white),
+        bodyLarge: GoogleFonts.roboto(color: color_wthite, fontSize: 16),
+        bodySmall: GoogleFonts.roboto(color: color_wthite, fontSize: 12),
+        bodyMedium: GoogleFonts.roboto(color: color_wthite, fontSize: 14),
+      ),
+      iconTheme: IconThemeData(color: color_wthite),
       // ignore: prefer_const_constructors
       appBarTheme: const AppBarTheme(
           backgroundColor: Colors.transparent, elevation: 0.0));

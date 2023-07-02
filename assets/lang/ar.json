@@ -1,4 +1,41 @@
 {
 
-    "welcom":"مرحبا"
+    "welcom":"مرحبا",
+    "Settings":"الاعدادات",
+    "profile":"الملف الشخصي",
+    "Edit profile":"تعديل الملف الشخصي",
+    "skip":"تخطي",
+    "Email":"البريد الالكتروني",
+    "Enter your Email":"أدخل بريدك الإلكتروني",
+    "Password":"رقمك السري",
+    "Enter your Password":"ادخل رقمك السري",
+    "Username":"اسم المستخدم",
+    "Enter your Username":"أدخل اسم المستخدم الخاص بك",
+    "Phone":"رقم هاتفك",
+    "Enter your Phone":"أدخل رقم هاتفك",
+    "Aleardy have Account":"لديك حساب بالفعل",
+    "Register":" تسجيل اول مرة",
+    "Login":"تسجيل الدخول",
+    "Logout":"تسجيل الخروج",
+    "Or":"او",
+    "don`t have account":"ليس لديك حساب",
+    "edit profile":"تعديل الحساب ",
+    "forget password":"نسيت الرقم السري",
+    "Cart":"السلة",
+    "Price":"السعر",
+    "Favourite":"المفضلة",
+    "Show More":"اظهر المزيد",
+    "Show Less":"اظهر القليل",
+    "App Mode":"نظام الهاتف",
+    "Category":"الاصناف",
+    "In Cart":"في السلة",
+    "Add to Cart":"اضف الي السلة",
+    "Discount":"الخصم",
+    "Total Price":"السعر الكلي",
+    "Confirm Order":"تأكيد الطلب",
+    "Special Offers":"عروض خاصة",
+    "Please wait....":"من فضلك انتظر",
+    "No internet connection":" لا يوجد اتصال بالانترنت"
+
+
 }

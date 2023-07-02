@@ -1,5 +1,41 @@
 {
+   "welcom":"welcom",
+   "Settings":"Settings",
+   "profile":"profile",
+   "Edit profile":"Edit profile",
+   "skip":"skip",
+   "Email":"Email",
+   "Enter your Email":"Enter your Email",
+   "Password":"Password",
+   "Enter your Password":"Enter your Password",
+   "Username":"Username",
+   "Enter your Username":"Enter your Username",
+   "Phone":"Phone",
+   "Enter your Phone":"Enter your Phone",
+   "Aleardy have Account":"Aleardy have Account",
+   "Register":"Register",
+   "Login":"Login",
+   "Logout":"Logout",
+   "Or":"Or",
+   "don`t have account":"don`t have account",
+   "edit profile":"edit profile",
+   "forget password":"forget password",
+   "Cart":"Cart",
+   "Price": "Price",
+   "Favourite":"Favourite",
+   "Show More":"Show More",
+   "Show Less":"Show Less",
+   "App Mode":"App Mode",
+   "Category":"Category",
+   "In Cart":"In Cart",
+   "Add to Cart":"Add to Cart",
+   "Discount":"Discount",
+   "Total Price":"Total Price",
+   "Confirm Order":"Confirm Order",
+   "Special Offers":"Special Offers",
+   "Please wait....":"Please wait....",
+   "No internet connection":"No internet connection"
 
-   "welcom":"welcom"
+
 
 }

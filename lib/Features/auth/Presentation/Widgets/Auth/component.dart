@@ -1,9 +1,15 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:store/Core/colors.dart';
 import 'package:store/Features/auth/Presentation/Logic/bloc/auth_bloc.dart';
-import '../../Domain/Entity/userinfo.dart';
+import '../../../../../Core/ReuseableComponent/snackbar_message.dart';
+import '../../../../../Core/applocal.dart';
+import '../../../../product/Presentation/Logic/bloc/checkinternetblock/check_internet_bloc_bloc.dart';
+import '../../../Domain/Entity/userinfo.dart';
 import 'signup.dart';
 
 Widget entryField(String title,
@@ -31,7 +37,7 @@ Widget entryField(String title,
             decoration: InputDecoration(
                 hintText: hint,
                 border: InputBorder.none,
-                fillColor: Color(0xfff3f3f4),
+                fillColor: Colors.grey,
                 filled: true))
       ],
     ),
@@ -107,13 +113,22 @@ Widget submitButton({
     child: ElevatedButton(
         style: ElevatedButton.styleFrom(
             elevation: 0, backgroundColor: Colors.transparent),
-        onPressed: () {
+        onPressed: () async {
           if (formKey.currentState!.validate()) {
-            bloc.add(LoginEvent(email: email, password: password));
+            if (await InternetConnectionChecker().hasConnection) {
+              bloc.add(LoginEvent(email: email, password: password));
+            } else {
+              // ignore: use_build_context_synchronously
+              SnackBarMessage.showErrorSnackBar(
+                  message:
+                      // ignore: use_build_context_synchronously
+                      getLang(context: context, key: "No internet connection")!,
+                  context: context);
+            }
           }
         },
         child: Text(
-          'Login',
+          getLang(context: context, key: "Login")!,
           style: TextStyle(fontSize: 20, color: Colors.white),
         )),
   );
@@ -152,11 +167,15 @@ Widget createAccountLabel(
 }
 
 Widget emailPasswordWidgetLogin(
-    {required TextEditingController controllerEmail, controllerPassword}) {
+    {required TextEditingController controllerEmail,
+    controllerPassword,
+    required BuildContext context}) {
   return Column(
     children: <Widget>[
-      entryField("Email id", controller: controllerEmail),
-      entryField("Password", isPassword: true, controller: controllerPassword),
+      entryField(getLang(context: context, key: "Enter your Email")!,
+          controller: controllerEmail),
+      entryField(getLang(context: context, key: "Enter your Password")!,
+          isPassword: true, controller: controllerPassword),
     ],
   );
 }
@@ -165,13 +184,15 @@ Widget emailPasswordWidgetRegister(
     {required TextEditingController name,
     required TextEditingController email,
     required TextEditingController password,
-    required TextEditingController phone}) {
+    required TextEditingController phone,
+    required BuildContext context}) {
   return Column(
     children: <Widget>[
-      entryField("Username", controller: name),
-      entryField("Email", controller: email),
-      entryField("Phone", controller: phone),
-      entryField("Password", isPassword: true, controller: password),
+      entryField(getLang(context: context, key: "Username")!, controller: name),
+      entryField(getLang(context: context, key: "Email")!, controller: email),
+      entryField(getLang(context: context, key: "Phone")!, controller: phone),
+      entryField(getLang(context: context, key: "Password")!,
+          isPassword: true, controller: password),
     ],
   );
 }
@@ -203,9 +224,19 @@ Widget submitButtonRegister(
     required GlobalKey<FormState> formKey,
     required BuildContext context}) {
   return InkWell(
-    onTap: () {
+    onTap: () async {
       if (formKey.currentState!.validate()) {
-        bloc.add(RegisterEvent(userEntiy: userData));
+        if (await InternetConnectionChecker().hasConnection) {
+          bloc.add(RegisterEvent(userEntiy: userData));
+        } else {
+          // ignore: use_build_context_synchronously
+          SnackBarMessage.showErrorSnackBar(
+              // ignore: use_build_context_synchronously
+              message:
+                  // ignore: use_build_context_synchronously
+                  getLang(context: context, key: "No internet connection")!,
+              context: context);
+        }
       }
     },
     child: Container(
@@ -223,12 +254,13 @@ Widget submitButtonRegister(
           ],
           // ignore: prefer_const_constructors
           gradient: LinearGradient(
-              begin: Alignment.centerLeft, end: Alignment.centerRight,
+              begin: Alignment.centerLeft,
+              end: Alignment.centerRight,
               // ignore: prefer_const_literals_to_create_immutables
               colors: [color3, Colors.yellow])),
       // ignore: prefer_const_constructors
       child: Text(
-        'Register Now',
+        getLang(context: context, key: "Register")!,
         style: const TextStyle(fontSize: 20, color: Colors.white),
       ),
     ),

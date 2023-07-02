@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-const Duration duration = Duration(milliseconds: 700);
+const Duration duration = Duration(milliseconds: 1000);
 
 class SnackBarMessage {
   static void showSuccessSnackBar(

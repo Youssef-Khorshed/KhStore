@@ -4,14 +4,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
+import 'package:store/Core/applocal.dart';
 import 'package:store/Core/colors.dart';
 import 'package:store/Features/auth/Presentation/Logic/bloc/auth_bloc.dart';
-import 'package:store/Features/auth/Presentation/Widgets/component.dart';
+import 'package:store/Features/auth/Presentation/Widgets/Auth/component.dart';
 import 'package:store/Features/product/Presentation/Logic/bloc/productBloc/prodcuts_bloc.dart';
 import 'package:store/Features/product/Presentation/widget/Home/loading_widget.dart';
 
-import '../../../../Core/ReuseableComponent/snackbar_message.dart';
-import '../../Domain/Entity/userinfo.dart';
+import '../../../../../Core/ReuseableComponent/snackbar_message.dart';
+import '../../../../auth/Domain/Entity/userinfo.dart';
 
 class Profile extends StatefulWidget {
   const Profile({super.key});
@@ -55,28 +57,39 @@ class _ProfileState extends State<Profile> {
                       gradient: LinearGradient(colors: const [color1, color10]),
                       borderRadius: BorderRadius.circular(20)),
                   child: ElevatedButton(
-                    onPressed: () {
-                      authbloc.add(UpdateEvent(
-                          userEntiy: UserData(
-                              email: authbloc.signup_email.text.isEmpty
-                                  ? productbloc.userinfo!.data!.email!
-                                  : authbloc.signup_email.text,
-                              password: '',
-                              name: authbloc.signup_username.text.isEmpty
-                                  ? productbloc.userinfo!.data!.name!
-                                  : authbloc.signup_username.text,
-                              phone: authbloc.signup_phone.text.isEmpty
-                                  ? productbloc.userinfo!.data!.phone!
-                                  : authbloc.signup_phone.text,
-                              id: null,
-                              image: null,
-                              token: null)));
-                      if (authbloc.signup_password.text.isEmpty != true) {
-                        authbloc.add(ForgetPasswordEvent(
-                            password: authbloc.signup_password.text));
+                    onPressed: () async {
+                      if (await InternetConnectionChecker().hasConnection) {
+                        authbloc.add(UpdateEvent(
+                            userEntiy: UserData(
+                                email: authbloc.signup_email.text.isEmpty
+                                    ? productbloc.userinfo!.data!.email!
+                                    : authbloc.signup_email.text,
+                                password: '',
+                                name: authbloc.signup_username.text.isEmpty
+                                    ? productbloc.userinfo!.data!.name!
+                                    : authbloc.signup_username.text,
+                                phone: authbloc.signup_phone.text.isEmpty
+                                    ? productbloc.userinfo!.data!.phone!
+                                    : authbloc.signup_phone.text,
+                                id: null,
+                                image: null,
+                                token: null)));
+                        if (authbloc.signup_password.text.isEmpty != true) {
+                          authbloc.add(ForgetPasswordEvent(
+                              password: authbloc.signup_password.text));
+                        }
+                        productbloc.add(GetUserDataEvent());
+
+                        authbloc.cleartext();
+                      } else {
+                        // ignore: use_build_context_synchronously
+                        SnackBarMessage.showErrorSnackBar(
+                            // ignore: use_build_context_synchronously
+                            message: getLang(
+                                context: context,
+                                key: "No internet connection")!,
+                            context: context);
                       }
-                      productbloc.add(GetUserDataEvent());
-                      authbloc.cleartext();
                     },
                     style: ElevatedButton.styleFrom(
                         elevation: 0.0, backgroundColor: Colors.transparent),
@@ -93,7 +106,7 @@ class _ProfileState extends State<Profile> {
                             // ignore: prefer_const_constructors
                             child: Text(
                               textAlign: TextAlign.center,
-                              'Edit Profile',
+                              getLang(context: context, key: "Edit profile")!,
                               style: const TextStyle(
                                   fontSize: 25, color: Colors.white),
                             ))
@@ -109,20 +122,20 @@ class _ProfileState extends State<Profile> {
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: Column(children: [
-                    entryField('Email',
+                    entryField(getLang(context: context, key: "Email")!,
                         controller: authbloc.signup_email,
                         isvalid: false,
                         hint: productbloc.userinfo!.data!.email!),
-                    entryField('Name',
+                    entryField(getLang(context: context, key: "Username")!,
                         controller: authbloc.signup_username,
                         isvalid: false,
                         hint: productbloc.userinfo!.data!.name!),
-                    entryField('Password',
+                    entryField(getLang(context: context, key: "Password")!,
                         controller: authbloc.signup_password,
                         hint: 'new password',
                         isPassword: true,
                         isvalid: false),
-                    entryField('Phone',
+                    entryField(getLang(context: context, key: "Phone")!,
                         controller: authbloc.signup_phone,
                         isvalid: false,
                         hint: productbloc.userinfo!.data!.phone!)

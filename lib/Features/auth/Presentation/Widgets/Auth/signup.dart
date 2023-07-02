@@ -3,7 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:store/Core/strings.dart';
 import 'package:store/Features/auth/Domain/Entity/userinfo.dart';
 import 'package:store/Features/auth/Presentation/Logic/bloc/auth_bloc.dart';
-import '../../../../Core/ReuseableComponent/snackbar_message.dart';
+import '../../../../../Core/ReuseableComponent/snackbar_message.dart';
+import '../../../../../Core/applocal.dart';
 import 'component.dart';
 
 class SignUpPage extends StatefulWidget {
@@ -55,6 +56,7 @@ class _SignUpPageState extends State<SignUpPage> {
                             fit: BoxFit.cover,
                           ),
                           emailPasswordWidgetRegister(
+                              context: context,
                               name: bloc.signup_username,
                               phone: bloc.signup_phone,
                               email: bloc.signup_email,
@@ -63,7 +65,8 @@ class _SignUpPageState extends State<SignUpPage> {
                             height: 10,
                           ),
                           state is LoadingAuth
-                              ? const Text('Please wait....')
+                              ? Text(getLang(
+                                  context: context, key: "Please wait....")!)
                               : submitButtonRegister(
                                   bloc: bloc,
                                   userData: UserData(
@@ -78,7 +81,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                   formKey: _formKey),
                           createAccountLabel(
                             context: context,
-                            text: 'Login',
+                            text: getLang(context: context, key: "Login")!,
                           ),
                         ],
                       ),

@@ -58,7 +58,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
     value.fold((fail) {
       change = true;
-
       emit(AuthFailState(message: getfailure(failure: fail), change: change));
     }, (entity) {
       userentity = entity;

@@ -2,23 +2,29 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:store/Core/ReuseableComponent/navigation.dart';
 import 'package:store/Core/ReuseableComponent/networkimage.dart';
+import 'package:store/Core/applocal.dart';
 import 'package:store/Core/colors.dart';
+import 'package:store/Core/strings.dart';
 import 'package:store/Core/theme/theme_cubit.dart';
-import 'package:store/Features/auth/Presentation/Widgets/profile.dart';
-import 'package:store/Features/product/Presentation/widget/Settings/settings.dart';
+import 'package:store/Features/auth/Presentation/Logic/bloc/auth_bloc.dart';
+import 'package:store/Features/auth/Presentation/Widgets/Auth/login.dart';
+import 'package:store/Features/product/Presentation/widget/Home/Category/Categories.dart';
+import 'package:store/Features/product/Presentation/widget/Home/SpecilaOffers/Specialoffers.dart';
+import 'package:store/Features/product/Presentation/widget/Profile/profile.dart';
 import 'package:store/Features/cart/presentation/logic/bloc/cart_bloc.dart';
 import 'package:store/Features/cart/presentation/widgets/cart.dart';
 import 'package:store/Features/favourite/presentation/logic/bloc/fav_bloc.dart';
 import 'package:store/Features/favourite/presentation/widgets/favpage.dart';
-import 'package:store/Features/product/Presentation/widget/Home/homepage/discount.dart';
 import 'package:store/Features/product/Presentation/widget/Home/loading_widget.dart';
-import 'package:store/Features/product/Presentation/widget/Home/product_list_widget.dart';
+import 'package:store/Features/product/Presentation/widget/Home/Category/product_list_widget.dart';
+import '../../../../../Core/ReuseableComponent/snackbar_message.dart';
 import '../../Logic/bloc/productBloc/prodcuts_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import 'homepage/carrosalpage.dart';
+import 'carrosalpage.dart';
 
 class Home extends StatefulWidget {
   Home({super.key});
@@ -33,6 +39,8 @@ class _HomeState extends State<Home> {
     final cartbloc = context.watch<CartBloc>();
     final favbloc = context.watch<FavBloc>();
     final theme = context.watch<ThemeCubit>();
+    final authbloc = context.watch<AuthBloc>();
+
     return BlocConsumer<ProdcutsBloc, ProdcutsState>(
       builder: (context, state) {
         final bloc = context.watch<ProdcutsBloc>();
@@ -76,14 +84,12 @@ class _HomeState extends State<Home> {
                         children: [
                           Text(
                             bloc.userinfo!.data!.name!,
-                            style: Theme.of(context).textTheme.displayMedium,
                           ),
                           SizedBox(
                             height: 10,
                           ),
                           Text(
                             bloc.userinfo!.data!.phone!,
-                            style: Theme.of(context).textTheme.displayMedium,
                           )
                           // ignore: prefer_const_literals_to_create_immutables
                           ,
@@ -92,9 +98,18 @@ class _HomeState extends State<Home> {
                             child: Column(
                               children: [
                                 ElevatedButton(
-                                  onPressed: () {
-                                    navigation(
-                                        context: context, page: Profile());
+                                  onPressed: () async {
+                                    if (await InternetConnectionChecker()
+                                        .hasConnection) {
+                                      // ignore: use_build_context_synchronously
+                                      navigation(
+                                          context: context, page: Profile());
+                                    } else {
+                                      // ignore: use_build_context_synchronously
+                                      SnackBarMessage.showErrorSnackBar(
+                                          message: 'No internet connection',
+                                          context: context);
+                                    }
                                   },
                                   style: Theme.of(context)
                                       .elevatedButtonTheme
@@ -110,10 +125,10 @@ class _HomeState extends State<Home> {
                                         width: 10,
                                       ),
                                       Text(
-                                        'Profile',
+                                        '${getLang(context: context, key: 'profile')}',
                                         style: Theme.of(context)
                                             .textTheme
-                                            .displayMedium,
+                                            .bodyLarge,
                                       )
                                     ],
                                   ),
@@ -122,10 +137,19 @@ class _HomeState extends State<Home> {
                                   height: 15,
                                 ),
                                 ElevatedButton(
-                                  onPressed: () {
-                                    favbloc.add(GetToFav(productid: null));
-                                    navigation(
-                                        context: context, page: FavPage());
+                                  onPressed: () async {
+                                    if (await InternetConnectionChecker()
+                                        .hasConnection) {
+                                      favbloc.add(GetToFav(productid: null));
+                                      // ignore: use_build_context_synchronously
+                                      navigation(
+                                          context: context, page: FavPage());
+                                    } else {
+                                      // ignore: use_build_context_synchronously
+                                      SnackBarMessage.showErrorSnackBar(
+                                          message: 'No internet connection',
+                                          context: context);
+                                    }
                                   },
                                   style: Theme.of(context)
                                       .elevatedButtonTheme
@@ -141,10 +165,12 @@ class _HomeState extends State<Home> {
                                         width: 15,
                                       ),
                                       Text(
-                                        'Favourite',
+                                        getLang(
+                                            context: context,
+                                            key: "Favourite")!,
                                         style: Theme.of(context)
                                             .textTheme
-                                            .displayMedium,
+                                            .bodyLarge,
                                       )
                                     ],
                                   ),
@@ -153,11 +179,23 @@ class _HomeState extends State<Home> {
                                   height: 15,
                                 ),
                                 ElevatedButton(
-                                    onPressed: () {
-                                      cartbloc
-                                          .add(GetCartEvent(productid: null));
-                                      navigation(
-                                          context: context, page: CartPage());
+                                    onPressed: () async {
+                                      if (await InternetConnectionChecker()
+                                          .hasConnection) {
+                                        cartbloc
+                                            .add(GetCartEvent(productid: null));
+                                        // ignore: use_build_context_synchronously
+                                        navigation(
+                                            context: context, page: CartPage());
+                                      } else {
+                                        // ignore: use_build_context_synchronously
+                                        SnackBarMessage.showErrorSnackBar(
+                                            // ignore: use_build_context_synchronously
+                                            message: getLang(
+                                                context: context,
+                                                key: "No internet connection")!,
+                                            context: context);
+                                      }
                                     },
                                     style: Theme.of(context)
                                         .elevatedButtonTheme
@@ -175,10 +213,11 @@ class _HomeState extends State<Home> {
                                           width: 15,
                                         ),
                                         Text(
-                                          'Cart',
+                                          getLang(
+                                              context: context, key: "Cart")!,
                                           style: Theme.of(context)
                                               .textTheme
-                                              .displayMedium,
+                                              .bodyLarge,
                                         )
                                       ],
                                     )),
@@ -187,8 +226,9 @@ class _HomeState extends State<Home> {
                                 ),
                                 ElevatedButton(
                                   onPressed: () {
+                                    authbloc.add(LogoutEvent());
                                     navigation(
-                                        context: context, page: Settings());
+                                        context: context, page: LoginPage());
                                   },
                                   style: Theme.of(context)
                                       .elevatedButtonTheme
@@ -205,10 +245,11 @@ class _HomeState extends State<Home> {
                                         width: 15,
                                       ),
                                       Text(
-                                        'Settings',
+                                        getLang(
+                                            context: context, key: "Logout")!,
                                         style: Theme.of(context)
                                             .textTheme
-                                            .displayMedium,
+                                            .bodyLarge,
                                       )
                                     ],
                                   ),
@@ -222,7 +263,11 @@ class _HomeState extends State<Home> {
                                       theme.state
                                           ? Icon(Icons.sunny)
                                           : Icon(Icons.nightlight),
-                                      Text(' App  Mode'),
+                                      SizedBox(
+                                        width: 10,
+                                      ),
+                                      Text(getLang(
+                                          context: context, key: "App Mode")!),
                                     ],
                                   ),
                                   onChanged: (value) {
@@ -255,109 +300,23 @@ class _HomeState extends State<Home> {
                                 imgList: bloc.banneritems,
                               )),
                         Text(
-                          'Categories',
+                          getLang(context: context, key: "Category")!,
                           style: GoogleFonts.averageSans(
                               color: color2, fontSize: 20),
                         ),
                         SizedBox(
                           height: 5,
                         ),
-                        Container(
-                          height: 150,
-                          padding: EdgeInsets.symmetric(horizontal: 10),
-                          child: ListView.separated(
-                            separatorBuilder: (context, index) =>
-                                SizedBox(width: 10),
-                            itemCount: bloc.categories.length,
-                            itemBuilder: (context, index) {
-                              return ClipRRect(
-                                borderRadius: BorderRadius.circular(30),
-                                child: Card(
-                                  elevation: 1,
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(5.0),
-                                    child: InkWell(
-                                      onTap: () {
-                                        bloc.add(GetCategoryEvent(
-                                            title: bloc.categories[index].name,
-                                            id: bloc.categories[index].id));
-                                      },
-                                      child: Column(
-                                        children: [
-                                          image(
-                                              url: bloc.categories[index].image,
-                                              width: 100,
-                                              height: 100),
-                                          Text(bloc.categories[index].name)
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              );
-                            },
-                            scrollDirection: Axis.horizontal,
-                          ),
-                        ),
+                        HomeCategories(bloc: bloc),
                         Text(
-                          'Special Offers',
+                          getLang(context: context, key: "Special Offers")!,
                           style: GoogleFonts.averageSans(
                               color: color2, fontSize: 20),
                         ),
                         SizedBox(
                           height: 5,
                         ),
-                        Container(
-                          height: 200,
-                          padding: EdgeInsets.symmetric(horizontal: 10),
-                          child: ListView.separated(
-                            separatorBuilder: (context, index) =>
-                                SizedBox(width: 10),
-                            itemCount: bloc.some_offerproducts.length,
-                            itemBuilder: (context, index) {
-                              return Stack(
-                                children: [
-                                  ClipRRect(
-                                    borderRadius: BorderRadius.circular(30),
-                                    child: Card(
-                                      elevation: 1,
-                                      child: Padding(
-                                        padding: EdgeInsets.all(10),
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.end,
-                                          children: [
-                                            image(
-                                                url: bloc
-                                                    .some_offerproducts[index]
-                                                    .images!
-                                                    .last,
-                                                width: 100,
-                                                height: 100),
-                                            SizedBox(
-                                              width: 100,
-                                              child: Text(
-                                                bloc.some_offerproducts[index]
-                                                    .name!,
-                                                overflow: TextOverflow.ellipsis,
-                                                maxLines: 2,
-                                              ),
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  DiscountText(
-                                      discount: bloc
-                                          .some_offerproducts[index].discount),
-                                  oldpriceText(index: index, cal: bloc),
-                                ],
-                              );
-                            },
-                            scrollDirection: Axis.horizontal,
-                          ),
-                        ),
+                        HomeOffers(bloc: bloc)
                       ],
                     ),
                   ),
@@ -375,24 +334,5 @@ class _HomeState extends State<Home> {
         }
       },
     );
-  }
-
-  Widget oldpriceText({required int index, required ProdcutsBloc cal}) {
-    return cal.some_offerproducts[index].discount > 0
-        ? Positioned(
-            bottom: 2,
-            right: 42,
-            child: Text(
-              '${cal.some_offerproducts[index].oldPrice} EGP',
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              // ignore: prefer_const_constructors
-              style: TextStyle(
-                color: color_grey,
-                fontSize: 15,
-                decoration: TextDecoration.lineThrough,
-              ),
-            ))
-        : Container();
   }
 }

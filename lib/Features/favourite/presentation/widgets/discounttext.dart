@@ -1,10 +1,21 @@
 import 'package:flutter/cupertino.dart';
+import 'package:store/Core/applocal.dart';
 
-import '../../../../../../Core/colors.dart';
+import '../../../../Core/colors.dart';
+import '../logic/bloc/fav_bloc.dart';
 
-class DiscountText extends StatelessWidget {
+class DiscountFav extends StatelessWidget {
+  int index;
   int discount;
-  DiscountText({super.key, required this.discount});
+  FavBloc cal;
+  BuildContext context;
+  DiscountFav({
+    super.key,
+    required this.index,
+    required this.context,
+    required this.discount,
+    required this.cal,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +28,7 @@ class DiscountText extends StatelessWidget {
               decoration: BoxDecoration(
                   color: color8, borderRadius: BorderRadius.circular(5)),
               child: Text(
-                'Discount ${discount} EGP',
+                '${getLang(context: context, key: "Discount")} ${cal.favdata[index].product!.discount} EGP',
                 style: const TextStyle(color: color3),
               ),
             ),

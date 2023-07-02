@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:store/Core/ReuseableComponent/networkimage.dart';
+import 'package:store/Core/applocal.dart';
 import 'package:store/Features/cart/presentation/logic/bloc/cart_bloc.dart';
 import 'package:store/Features/favourite/presentation/logic/bloc/fav_bloc.dart';
 import 'package:store/Features/product/Domain/Entities/product/insidedata.dart';
@@ -81,15 +82,18 @@ class _ProductPageState extends State<ProductPage> {
                               flex: 3,
                               child: Text(
                                 textAlign: TextAlign.center,
-                                bloccart.cart ? 'In Cart' : 'Add to Cart',
+                                getLang(
+                                    context: context,
+                                    key: bloccart.cart
+                                        ? 'In Cart'
+                                        : 'Add to Cart')!,
                                 style: TextStyle(
-                                    fontSize: 25, color: Colors.white),
+                                    fontSize: 25, color: color_wthite),
                               ))
                         ],
                       ),
                     )),
 
-                backgroundColor: Colors.white,
                 appBar: AppBar(
                   elevation: 0,
                   backgroundColor: Colors.transparent,

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:store/Core/exception.dart';
 import 'package:store/Core/strings.dart';
@@ -48,12 +50,22 @@ class RemoteDataSourceImp extends RemoteDataSource {
 
   @override
   Future<List<BannerModel>> getbanner() async {
-    final response = await Dio().get('${baseUrl}banners',
-        options: Options(headers: headers(), receiveDataWhenStatusError: true));
-    if (response.statusCode == 200) {
-      final value = BannerListModel.fromJson(response.data);
-      return Future.value(value.data!);
-    } else {
+    try {
+      String api = Uri.parse('${baseUrl}banners').toString();
+      final response = await Dio().get(api,
+          options:
+              Options(headers: headers(), receiveDataWhenStatusError: false));
+      if (response.statusCode == 200) {
+        final value = BannerListModel.fromJson(response.data);
+        for (int i = 0; i < value.data!.length; i++) {
+          value.data![i].image = bannerimages[i];
+        }
+        return Future.value(value.data!);
+      } else {
+        throw ApiException();
+      }
+    } on HttpException catch (err) {
+      print('eee');
       throw ApiException();
     }
   }

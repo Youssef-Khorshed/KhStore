@@ -11,7 +11,9 @@ import 'package:store/Features/product/Presentation/Logic/bloc/productBloc/prodc
 import 'package:store/Features/product/Presentation/widget/Home/loading_widget.dart';
 import 'package:store/Features/product/Presentation/widget/Home/product.dart';
 
-import '../../../../cart/presentation/logic/bloc/cart_bloc.dart';
+import '../../../../../cart/presentation/logic/bloc/cart_bloc.dart';
+import 'discountCategory.dart';
+import 'oldpricecategory.dart';
 
 class PostListWidget extends StatelessWidget {
   final List<InsideData> items;
@@ -73,13 +75,16 @@ class PostListWidget extends StatelessWidget {
                 children: [
                   Hero(
                     tag: '${items[index].id}',
-                    child: image(url: items[index].image!),
+                    child: image(
+                        url: items[index].image!,
+                        width: 150,
+                        height: 150,
+                        fit: BoxFit.cover),
                   ),
                   Positioned(
                       bottom: 18,
                       child: Text(
                         'Price  ${items[index].price} EGP',
-                        style: const TextStyle(color: color7, fontSize: 15),
                       )),
                   Positioned(
                       bottom: 45,
@@ -87,16 +92,17 @@ class PostListWidget extends StatelessWidget {
                         '${items[index].description}',
                         overflow: TextOverflow.ellipsis,
                         maxLines: 1,
-                        style: const TextStyle(
-                          color: color7,
-                          fontSize: 15,
-                        ),
                       )),
                   discountText(
                       index: index,
                       discount: items[index].discount,
+                      items: items,
                       context: context),
-                  oldpriceText(index: index, discount: items[index].discount),
+                  oldpriceText(
+                      context: context,
+                      index: index,
+                      discount: items[index].discount,
+                      items: items),
                 ],
               ),
             ),
@@ -104,45 +110,5 @@ class PostListWidget extends StatelessWidget {
         );
       },
     );
-  }
-
-  Widget discountText(
-      {required int index,
-      required int discount,
-      required BuildContext context}) {
-    return discount > 0
-        ? Positioned(
-            top: 0,
-            left: 0,
-            child: Container(
-              padding: const EdgeInsets.all(3),
-              decoration: BoxDecoration(
-                  color: color8, borderRadius: BorderRadius.circular(5)),
-              child: Text(
-                'Discount ${items[index].discount} EGP',
-                style: const TextStyle(color: color3),
-              ),
-            ),
-          )
-        : Container();
-  }
-
-  Widget oldpriceText({required int index, required int discount}) {
-    return items[index].discount > 0
-        ? Positioned(
-            bottom: 2,
-            right: 42,
-            child: Text(
-              '${items[index].oldPrice} EGP',
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              // ignore: prefer_const_constructors
-              style: TextStyle(
-                color: color_grey,
-                fontSize: 15,
-                decoration: TextDecoration.lineThrough,
-              ),
-            ))
-        : Container();
   }
 }

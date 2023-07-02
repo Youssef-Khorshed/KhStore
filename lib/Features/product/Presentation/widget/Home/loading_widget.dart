@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../../../Core/colors.dart';
+
 class LoadingWidget extends StatelessWidget {
   const LoadingWidget({Key? key}) : super(key: key);
 
@@ -10,6 +12,9 @@ class LoadingWidget extends StatelessWidget {
           elevation: 0,
           backgroundColor: Colors.transparent,
         ),
-        body: Center(child: CircularProgressIndicator()));
+        body: const Center(
+            child: CircularProgressIndicator(
+          color: color6,
+        )));
   }
 }
