@@ -29,16 +29,19 @@ Widget entryField(String title,
         SizedBox(
           height: 10,
         ),
-        TextFormField(
-            controller: controller,
-            keyboardType: TextInputType.text,
-            validator: isvalid ? validation() : null,
-            obscureText: isPassword,
-            decoration: InputDecoration(
-                hintText: hint,
-                border: InputBorder.none,
-                fillColor: Colors.grey,
-                filled: true))
+        ClipRRect(
+          borderRadius: BorderRadius.all(Radius.circular(5)),
+          child: TextFormField(
+              controller: controller,
+              keyboardType: TextInputType.text,
+              validator: isvalid ? validation() : null,
+              obscureText: isPassword,
+              decoration: InputDecoration(
+                  hintText: hint,
+                  border: InputBorder.none,
+                  fillColor: Colors.grey.shade300,
+                  filled: true)),
+        )
       ],
     ),
   );
@@ -135,11 +138,12 @@ Widget submitButton({
 }
 
 Widget createAccountLabel(
-    {required BuildContext context, required String text}) {
+    {required BuildContext context,
+    required String text,
+    required Widget page}) {
   return InkWell(
     onTap: () {
-      Navigator.push(
-          context, MaterialPageRoute(builder: (context) => const SignUpPage()));
+      Navigator.push(context, MaterialPageRoute(builder: (context) => page));
     },
     child: Container(
       margin: const EdgeInsets.symmetric(vertical: 20),

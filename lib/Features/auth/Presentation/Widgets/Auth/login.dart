@@ -6,9 +6,8 @@ import 'package:store/Core/ReuseableComponent/navigation.dart';
 import 'package:store/Core/applocal.dart';
 import 'package:store/Core/colors.dart';
 import 'package:store/Features/auth/Presentation/Logic/bloc/auth_bloc.dart';
-import 'package:store/Features/product/Presentation/Logic/bloc/productBloc/prodcuts_bloc.dart';
+import 'package:store/Features/auth/Presentation/Widgets/Auth/signup.dart';
 import 'package:store/Features/product/Presentation/widget/Home/home.dart';
-import 'package:store/Features/product/Presentation/widget/Home/loading_widget.dart';
 import '../../../../../Core/ReuseableComponent/snackbar_message.dart';
 import 'component.dart';
 
@@ -94,6 +93,7 @@ class _LoginPageState extends State<LoginPage> {
                     divider(),
                     createAccountLabel(
                         context: context,
+                        page: SignUpPage(),
                         text: getLang(context: context, key: "Register")!),
                   ],
                 ),

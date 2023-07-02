@@ -28,7 +28,7 @@ class Pageview_component {
           animated_navigation(context: context, widget: LoginPage());
         },
         child: Text(
-          getLang(context: context, key: "Skip")!,
+          getLang(context: context, key: "skip")!,
           style: TextStyle(color: Colors.amber),
         ));
   }
