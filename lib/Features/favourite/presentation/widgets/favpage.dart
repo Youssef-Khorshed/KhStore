@@ -23,7 +23,7 @@ class FavPage extends StatelessWidget {
             appBar: AppBar(
               title: Text(
                 getLang(context: context, key: "Favourite")!,
-                style: Theme.of(context).textTheme.displayMedium,
+                style: Theme.of(context).textTheme.bodyLarge,
               ),
               elevation: 0,
               backgroundColor: Colors.transparent,

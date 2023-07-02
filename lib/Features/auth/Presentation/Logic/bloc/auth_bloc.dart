@@ -68,16 +68,17 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   FutureOr<void> register(RegisterEvent event, Emitter<AuthState> emit) async {
     final value = await registerUseCase.call(userinfo: event.userEntiy);
-    cleartext();
     change = false;
     emit(LoadingAuth(change: change));
-
     value.fold((fail) {
       change = true;
+      cleartext();
+
       emit(AuthFailState(message: getfailure(failure: fail), change: change));
     }, (entity) {
       userentity = entity;
       change = true;
+      cleartext();
       emit(Registe_Success_State(entiy: entity, change: change));
     });
   }

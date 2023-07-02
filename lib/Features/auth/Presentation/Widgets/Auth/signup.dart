@@ -4,6 +4,8 @@ import 'package:store/Core/strings.dart';
 import 'package:store/Features/auth/Domain/Entity/userinfo.dart';
 import 'package:store/Features/auth/Presentation/Logic/bloc/auth_bloc.dart';
 import 'package:store/Features/auth/Presentation/Widgets/Auth/login.dart';
+import 'package:store/Features/product/Presentation/widget/Home/home.dart';
+import '../../../../../Core/ReuseableComponent/navigation.dart';
 import '../../../../../Core/ReuseableComponent/snackbar_message.dart';
 import '../../../../../Core/applocal.dart';
 import 'component.dart';
@@ -98,8 +100,20 @@ class _SignUpPageState extends State<SignUpPage> {
         );
       },
       listener: (context, state) {
-        if (state is Registe_Success_State) {}
-        if (state is AuthFailState) {}
+        if (state is Registe_Success_State) {
+          SnackBarMessage.showSuccessSnackBar(
+              message: state.entiy.message!, context: context);
+          animated_navigation(context: context, widget: Home());
+        }
+
+        if (state is AuthFailState) {
+          SnackBarMessage.showErrorSnackBar(
+              // ignore: use_build_context_synchronously
+              message:
+                  // ignore: use_build_context_synchronously
+                  state.message,
+              context: context);
+        }
       },
     );
   }
