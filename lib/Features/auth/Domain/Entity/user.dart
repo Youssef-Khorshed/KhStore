@@ -11,8 +11,3 @@ class UserEntiy extends Equatable {
   @override
   List<Object?> get props => [data, message, status];
 }
-
-
-
-
-// ignore: must_be_immutable

@@ -48,7 +48,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<LogoutEvent>(logout);
     on<ForgetPasswordEvent>(forgetpassword);
   }
-
   FutureOr<void> login(LoginEvent event, Emitter<AuthState> emit) async {
     emit(LoadingAuth(change: change));
     final value =

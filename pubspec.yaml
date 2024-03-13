@@ -20,7 +20,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: '>=2.18.2 <3.0.0'
+  sdk: '>=3.2.0 <4.0.0'
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -37,30 +37,46 @@ dependencies:
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^1.0.2
-  equatable: ^2.0.5
-  dartz: ^0.10.1
+  cupertino_icons:
+  equatable: 
+  dartz: 
   bloc: 
   flutter_bloc: 
-  dio: ^4.0.6
+  dio: 
   connectivity_plus:
   shared_preferences:
-  get_it: ^7.2.0
-  internet_connection_checker: ^1.0.0+1
-  carousel_slider: ^4.0.0
-  google_fonts:
-  flutter_stripe: ^9.2.2
+  get_it: 
+  internet_connection_checker: 
+  carousel_slider: 
+  google_fonts: ^4.0.4
+  flutter_paypal: ^0.2.0
+
+#  flutter_stripe:
+#  stripe_android:
+#dependency_overrides:
+#  stripe_android: "9.5.0+1"
+
+ 
+
 
 dev_dependencies:
+    flutter_launcher_icons: 
+
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/logo.png"
+
   flutter_test:
     sdk: flutter
+  
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
-  flutter_lints: ^2.0.0
+  flutter_lints: ^3.0.1
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -77,7 +93,7 @@ flutter:
   assets:
     - assets/
     - assets/lang/
-  #   - images/a_dot_ham.jpeg
+    - assets/erro.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

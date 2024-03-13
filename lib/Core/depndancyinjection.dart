@@ -132,7 +132,7 @@ Future<void> init() async {
       () => InternetConnectionChecker());
   db.registerLazySingleton(() => dio);
   db.registerLazySingleton(() => Widget);
-  db.registerLazySingleton(() => MyApp(
-        nextwidget: db(),
-      ));
+  // db.registerLazySingleton(() => MyApp(
+  //       nextwidget: db(),
+  //     ));
 }

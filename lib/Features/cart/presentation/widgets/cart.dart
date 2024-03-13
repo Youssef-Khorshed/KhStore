@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:store/Core/ReuseableComponent/navigation.dart';
 import 'package:store/Core/applocal.dart';
+import 'package:store/Features/Payment/paymentUI.dart';
 import 'package:store/Features/product/Presentation/widget/Home/loading_widget.dart';
 import '../../../../Core/ReuseableComponent/networkimage.dart';
 import '../../../../Core/colors.dart';
-import '../../../Payment/payment.dart';
 import '../logic/bloc/cart_bloc.dart';
 
 class CartPage extends StatelessWidget {
@@ -24,10 +25,7 @@ class CartPage extends StatelessWidget {
                     gradient:
                         const LinearGradient(colors: [color3, Colors.yellow]),
                     borderRadius: BorderRadius.circular(20)),
-                child: ElevatedButton(
-                  onPressed: () {},
-                  style: ElevatedButton.styleFrom(
-                      elevation: 0.0, backgroundColor: Colors.transparent),
+                child: Container(
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     // ignore: prefer_const_literals_to_create_immutables
@@ -45,15 +43,13 @@ class CartPage extends StatelessWidget {
             appBar: AppBar(
               elevation: 0,
               actions: [
-                ElevatedButton(
-                    onPressed: () async {
-                      await PaymentHelper.makepayment(
-                          price: bloc.carts!.data!.total.toString());
-                    },
-                    child: Text(
-                      getLang(context: context, key: "Confirm Order")!,
-                      style: TextStyle(color: Colors.amber),
-                    )),
+                PaymentPage(
+                  bloc: bloc,
+                )
+                // ElevatedButton(
+                //     onPressed: () async {
+                //       // await PaymentHelper.makepayment(
+                //       //     price: bloc.carts!.data!.total.toString());
               ],
               backgroundColor: Colors.transparent,
               leading: IconButton(

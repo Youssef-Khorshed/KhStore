@@ -1,4 +1,8 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
+import 'package:store/Core/ReuseableComponent/navigation.dart';
+import 'package:store/Features/product/Presentation/widget/Home/product.dart';
 
 import '../../../../../../Core/ReuseableComponent/networkimage.dart';
 import '../../../Logic/bloc/productBloc/prodcuts_bloc.dart';
@@ -18,37 +22,42 @@ class HomeOffers extends StatelessWidget {
         separatorBuilder: (context, index) => SizedBox(width: 10),
         itemCount: bloc.some_offerproducts.length,
         itemBuilder: (context, index) {
-          return Stack(
-            children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(30),
-                child: Card(
-                  elevation: 1,
-                  child: Padding(
-                    padding: EdgeInsets.all(10),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        image(
-                            url: bloc.some_offerproducts[index].images!.last,
+          return InkWell(
+            onTap: () => navigation(
+                context: context,
+                page: ProductPage(product: bloc.some_offerproducts[index])),
+            child: Stack(
+              children: [
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(30),
+                  child: Card(
+                    elevation: 1,
+                    child: Padding(
+                      padding: EdgeInsets.all(10),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          image(
+                              url: bloc.some_offerproducts[index].images!.last,
+                              width: 100,
+                              height: 100),
+                          SizedBox(
                             width: 100,
-                            height: 100),
-                        SizedBox(
-                          width: 100,
-                          child: Text(
-                            bloc.some_offerproducts[index].name!,
-                            overflow: TextOverflow.ellipsis,
-                            maxLines: 2,
-                          ),
-                        )
-                      ],
+                            child: Text(
+                              bloc.some_offerproducts[index].name!,
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 2,
+                            ),
+                          )
+                        ],
+                      ),
                     ),
                   ),
                 ),
-              ),
-              DiscountText(discount: bloc.some_offerproducts[index].discount),
-              oldpriceText(index: index, cal: bloc, context: context),
-            ],
+                DiscountText(discount: bloc.some_offerproducts[index].discount),
+                oldpriceText(index: index, cal: bloc, context: context),
+              ],
+            ),
           );
         },
         scrollDirection: Axis.horizontal,

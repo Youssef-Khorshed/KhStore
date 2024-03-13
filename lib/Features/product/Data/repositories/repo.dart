@@ -11,8 +11,6 @@ import 'package:store/Features/product/Domain/Entities/categories/Categoty.dart'
 import 'package:store/Features/product/Domain/Entities/product/insidedata.dart';
 import 'package:store/Features/product/Domain/Repositories/product.dart';
 
-import '../../../../Core/strings.dart';
-
 typedef Future<Unit> add_delete_update_post();
 
 class ProductRepoImp extends ProductRepo {
@@ -66,7 +64,12 @@ class ProductRepoImp extends ProductRepo {
   Future<Either<Failure, List<BannerData>>> getbanner() async {
     if (await connection.isConnected) {
       try {
-        return Right(await remote.getbanner());
+        final banners = await remote.getbanner();
+        print('======================bannerrrrs====================');
+        print(banners);
+        print('======================banner list====================');
+
+        return Right(banners);
       } on ApiException {
         return Left(ApiFailure());
       }

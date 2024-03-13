@@ -14,6 +14,11 @@ class LoadingProducts extends ProdcutsState {
   List<Object?> get props => [];
 }
 
+class LoadingBanners extends ProdcutsState {
+  @override
+  List<Object?> get props => [];
+}
+
 // ignore: must_be_immutable
 class GetProdcutsSuccess extends ProdcutsState {
   List<InsideData> products;

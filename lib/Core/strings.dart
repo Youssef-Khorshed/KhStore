@@ -29,6 +29,9 @@ List<String> bannerimages = [
   'https://img.freepik.com/free-photo/mid-shot-happy-woman-holding-bags_23-2148316676.jpg?w=2000',
   'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSt747RdVhmErNEwJhRVm42CwbDgg0QELkXT338cuOhpv_xMohMvfysVSP4c6xYhuM5IqI',
   'https://img.freepik.com/free-photo/full-length-portrait-happy-family_171337-2281.jpg',
+  'https://img.freepik.com/free-photo/full-length-portrait-happy-family_171337-2281.jpg',
+  'https://img.freepik.com/free-photo/full-length-portrait-happy-family_171337-2281.jpg',
+  'https://img.freepik.com/free-photo/full-length-portrait-happy-family_171337-2281.jpg',
 ];
 // ignore: constant_identifier_names
 const String payment_publickey =

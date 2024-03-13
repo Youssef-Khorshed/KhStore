@@ -107,7 +107,7 @@ class _ProductPageState extends State<ProductPage> {
                         onPressed: () {
                           blocfav.add(AddToFav(productid: widget.product.id));
                         },
-                        icon: blocfav.fav!
+                        icon: blocfav.fav
                             ? Icon(
                                 Icons.favorite_border,
                                 color: Colors.red,

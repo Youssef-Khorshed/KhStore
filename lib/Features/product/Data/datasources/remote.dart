@@ -55,17 +55,19 @@ class RemoteDataSourceImp extends RemoteDataSource {
       final response = await Dio().get(api,
           options:
               Options(headers: headers(), receiveDataWhenStatusError: false));
+
       if (response.statusCode == 200) {
         final value = BannerListModel.fromJson(response.data);
+
         for (int i = 0; i < value.data!.length; i++) {
           value.data![i].image = bannerimages[i];
         }
+
         return Future.value(value.data!);
       } else {
         throw ApiException();
       }
     } on HttpException catch (err) {
-      print('eee');
       throw ApiException();
     }
   }

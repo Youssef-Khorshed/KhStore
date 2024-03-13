@@ -3,6 +3,7 @@ import 'package:store/Features/product/Domain/Entities/categories/Categoty.dart'
 class CategoryModel extends Category {
   const CategoryModel(
       {required super.id, required super.name, required super.image});
+
   // from json
   factory CategoryModel.fromJson(Map<String, dynamic> json) {
     return CategoryModel(

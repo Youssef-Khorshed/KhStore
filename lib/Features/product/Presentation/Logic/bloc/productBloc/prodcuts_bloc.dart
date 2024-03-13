@@ -79,9 +79,12 @@ class ProdcutsBloc extends Bloc<ProdcutsEvent, ProdcutsState> {
 
   FutureOr<void> getbanner(
       GetBannerEvent event, Emitter<ProdcutsState> emit) async {
-    emit(LoadingProducts());
+    emit(LoadingBanners());
     final value = await getBannerUseCase.call();
-    emit(LoadingProducts());
+    print('======================banner list====================');
+    print(value);
+    print('======================banner list====================');
+
     value.fold((failure) {
       emit(GetBannerFail(message: getfailure(failure: failure)));
     }, (products) {

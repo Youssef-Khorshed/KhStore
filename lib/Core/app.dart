@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
+import 'package:store/Core/AlertDialog.dart';
 import 'package:store/Core/applocal.dart';
 import 'package:store/Core/depndancyinjection.dart' as db;
+import 'package:store/Core/internet.dart';
 import 'package:store/Core/strings.dart';
 import 'package:store/Core/theme/theme_cubit.dart';
 import 'package:store/Features/auth/Domain/Entity/userinfo.dart';
@@ -15,7 +18,8 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 
 class MyApp extends StatelessWidget {
   Widget nextwidget;
-  MyApp({required this.nextwidget});
+  bool checkconnection;
+  MyApp({required this.nextwidget, required this.checkconnection});
   @override
   Widget build(BuildContext context) {
     final isPlatformDark =
@@ -23,6 +27,7 @@ class MyApp extends StatelessWidget {
             Brightness.dark;
     final initTheme =
         isPlatformDark ? ThemeCubit.darkTheme : ThemeCubit.lightTheme;
+
     return MultiBlocProvider(
         providers: [
           BlocProvider(
@@ -48,10 +53,14 @@ class MyApp extends StatelessWidget {
           return MaterialApp(
             title: 'Flutter Demo',
             debugShowCheckedModeBanner: false,
-            theme: initTheme,
+            //   theme: ThemeMode.light,
             themeMode: state ? ThemeMode.light : ThemeMode.dark,
             darkTheme: ThemeCubit.darkTheme,
-            home: nextwidget,
+            home: checkconnection
+                ? nextwidget
+                : message(
+                    message: 'Unable to connect to the internet.',
+                    context: context),
             // ignore: prefer_const_literals_to_create_immutables
             localizationsDelegates: [
               AppLocale.delegate,
@@ -61,7 +70,7 @@ class MyApp extends StatelessWidget {
             ],
             // ignore: prefer_const_literals_to_create_immutables
 
-            supportedLocales: [
+            supportedLocales: const [
               Locale("en", ""), // English
               Locale("ar", ""), // arabic
             ],

@@ -15,7 +15,7 @@ class FavBloc extends Bloc<FavEvent, FavState> {
   AddTofavUsecase addTofavUsecase;
   GetFavUseCase getFavUseCase;
   FavEntity? favEntity;
-  bool? fav;
+  bool fav = false;
   List<FavInsideData> favdata = [];
   FavBloc({required this.addTofavUsecase, required this.getFavUseCase})
       : super(FavInitial()) {
