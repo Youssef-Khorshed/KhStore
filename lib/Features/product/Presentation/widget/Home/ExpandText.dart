@@ -40,7 +40,8 @@ class _TextExpandState extends State<TextExpand> {
                       check = !check;
                     });
                   },
-                  child: check ? Text('Show less') : Text('Show more'))
+                  child:
+                      check ? const Text('Show less') : const Text('Show more'))
             ],
           );
   }

@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import '../../../../../../Core/colors.dart';
 import '../../../Logic/bloc/productBloc/prodcuts_bloc.dart';
 
 Widget oldpriceText(

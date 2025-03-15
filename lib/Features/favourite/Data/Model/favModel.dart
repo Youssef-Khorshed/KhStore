@@ -1,4 +1,3 @@
-import 'package:store/Features/auth/Domain/Entity/userinfo.dart';
 import 'package:store/Features/favourite/Data/Model/favDataModel.dart';
 import 'package:store/Features/favourite/domain/entity/favEntity.dart';
 

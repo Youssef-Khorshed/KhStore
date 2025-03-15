@@ -1,8 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:store/Features/product/Data/models/banner/bannerModel.dart';
 
-import 'banner.dart';
-
 class BannerList extends Equatable {
   bool? status;
   Null message;

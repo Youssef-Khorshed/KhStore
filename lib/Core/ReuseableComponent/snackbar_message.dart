@@ -10,7 +10,7 @@ class SnackBarMessage {
         duration: duration,
         content: Text(
           message,
-          style: TextStyle(color: Colors.white, fontSize: 20),
+          style: const TextStyle(color: Colors.white, fontSize: 20),
         ),
         backgroundColor: Colors.green,
       ),

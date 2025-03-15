@@ -12,7 +12,7 @@ import '../../../../../Core/ReuseableComponent/snackbar_message.dart';
 import 'component.dart';
 
 class LoginPage extends StatefulWidget {
-  LoginPage({Key? key, this.title}) : super(key: key);
+  const LoginPage({super.key, this.title});
 
   final String? title;
 
@@ -86,7 +86,7 @@ class _LoginPageState extends State<LoginPage> {
                       padding: const EdgeInsets.symmetric(vertical: 10),
                       alignment: Alignment.centerRight, //
                       child: Text(
-                          '${getLang(context: context, key: "forget password")!}',
+                          getLang(context: context, key: "forget password")!,
                           style: TextStyle(
                               fontSize: 14, fontWeight: FontWeight.w500)),
                     ),

@@ -11,9 +11,9 @@ class HomeCategories extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 150,
-      padding: EdgeInsets.symmetric(horizontal: 10),
+      padding: const EdgeInsets.symmetric(horizontal: 10),
       child: ListView.separated(
-        separatorBuilder: (context, index) => SizedBox(width: 10),
+        separatorBuilder: (context, index) => const SizedBox(width: 10),
         itemCount: bloc.categories.length,
         itemBuilder: (context, index) {
           return ClipRRect(

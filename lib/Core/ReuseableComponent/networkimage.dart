@@ -7,7 +7,7 @@ Widget image(
     width: width,
     height: height,
     image: NetworkImage(url ?? error_image),
-    placeholder: AssetImage("assets/image.png"),
+    placeholder: const AssetImage("assets/image.png"),
     imageErrorBuilder: (context, error, stackTrace) {
       return Image.asset('assets/erro.png', fit: fit);
     },

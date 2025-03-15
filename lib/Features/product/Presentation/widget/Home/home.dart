@@ -27,7 +27,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'carrosalpage.dart';
 
 class Home extends StatefulWidget {
-  Home({super.key});
+  const Home({super.key});
 
   @override
   State<Home> createState() => _HomeState();

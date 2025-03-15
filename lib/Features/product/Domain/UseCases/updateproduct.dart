@@ -1,7 +1,3 @@
-import 'package:dartz/dartz.dart';
-import '../../../../Core/error.dart';
-import '../Entities/product/products.dart';
-import '../Repositories/product.dart';
 
 // class UpdateproductUsecase {
 //   ProductRepo repo;

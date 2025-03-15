@@ -11,7 +11,7 @@ import '../../../../../Core/applocal.dart';
 import 'component.dart';
 
 class SignUpPage extends StatefulWidget {
-  const SignUpPage({Key? key, this.title}) : super(key: key);
+  const SignUpPage({super.key, this.title});
 
   final String? title;
 

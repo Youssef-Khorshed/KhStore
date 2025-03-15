@@ -3,7 +3,6 @@ import 'package:store/Features/auth/Domain/Entity/user.dart';
 import 'package:store/Features/product/Domain/Entities/categories/Categoty.dart';
 import 'package:store/Features/product/Domain/Entities/banner/banner.dart';
 import 'package:store/Features/product/Domain/Entities/product/insidedata.dart';
-import 'package:store/Features/product/Domain/Entities/product/outsidedata.dart';
 import '../../../../Core/error.dart';
 
 abstract class ProductRepo {

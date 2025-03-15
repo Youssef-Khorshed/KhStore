@@ -5,10 +5,10 @@ class FormSubmitBtn extends StatelessWidget {
   final bool isUpdatePost;
 
   const FormSubmitBtn({
-    Key? key,
+    super.key,
     required this.onPressed,
     required this.isUpdatePost,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

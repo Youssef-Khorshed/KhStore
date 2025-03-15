@@ -1,16 +1,12 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:store/Core/colors.dart';
 import 'package:store/Features/auth/Presentation/Logic/bloc/auth_bloc.dart';
 import '../../../../../Core/ReuseableComponent/snackbar_message.dart';
 import '../../../../../Core/applocal.dart';
-import '../../../../product/Presentation/Logic/bloc/checkinternetblock/check_internet_bloc_bloc.dart';
 import '../../../Domain/Entity/userinfo.dart';
-import 'signup.dart';
 
 Widget entryField(String title,
     {bool isPassword = false,
@@ -52,6 +48,7 @@ String? Function(String?)? validation() {
     if (value == null || value.isEmpty) {
       return 'Please enter some text';
     }
+    return null;
   };
 }
 

@@ -23,14 +23,14 @@ class Custompageroute extends PageRouteBuilder {
   Widget widget;
   Custompageroute({required this.widget})
       : super(
-            transitionDuration: Duration(seconds: 1),
+            transitionDuration: const Duration(seconds: 1),
             pageBuilder: (context, animation, secondaryanimation) => widget);
 
   @override
   Widget buildTransitions(BuildContext context, Animation<double> animation,
       Animation<double> secondaryAnimation, Widget child) {
     return SlideTransition(
-      position: Tween<Offset>(begin: Offset(0, 1), end: Offset.zero)
+      position: Tween<Offset>(begin: const Offset(0, 1), end: Offset.zero)
           .animate(animation),
       child: child,
     );

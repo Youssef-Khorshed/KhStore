@@ -67,7 +67,7 @@ class RemoteDataSourceImp extends RemoteDataSource {
       } else {
         throw ApiException();
       }
-    } on HttpException catch (err) {
+    } on HttpException {
       throw ApiException();
     }
   }

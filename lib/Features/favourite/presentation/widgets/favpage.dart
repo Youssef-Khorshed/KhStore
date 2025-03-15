@@ -11,7 +11,7 @@ import '../../../../Core/colors.dart';
 import 'oldpriceFav.dart';
 
 class FavPage extends StatelessWidget {
-  FavPage({super.key});
+  const FavPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +33,7 @@ class FavPage extends StatelessWidget {
                   },
                   icon: const Icon(Icons.arrow_back)),
             ),
-            body: bloc.favdata.length == 0
+            body: bloc.favdata.isEmpty
                 ? Center(child: image(url: no_item_found))
                 : grid(cal: bloc),
           );

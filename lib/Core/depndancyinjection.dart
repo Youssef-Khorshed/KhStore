@@ -3,7 +3,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:get_it/get_it.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:store/Core/app.dart';
 import 'package:store/Core/internet.dart';
 import 'package:store/Core/theme/theme_cubit.dart';
 import 'package:store/Features/auth/Data/DataSource/local.dart';
@@ -41,7 +40,6 @@ import '../Features/cart/domain/usecase/getcart.dart';
 import '../Features/cart/domain/usecase/updatecart.dart';
 import '../Features/product/Data/datasources/local.dart';
 import '../Features/product/Data/repositories/repo.dart';
-import '../Features/product/Presentation/Logic/bloc/checkinternetblock/check_internet_bloc_bloc.dart';
 import '../Features/product/Presentation/Logic/bloc/productBloc/prodcuts_bloc.dart';
 
 final db = GetIt.instance;
@@ -59,8 +57,6 @@ Future<void> init() async {
       ));
   // Favourite Bloc
   db.registerFactory(() => FavBloc(addTofavUsecase: db(), getFavUseCase: db()));
-  // Internet Bloc
-  db.registerFactory(() => CheckInternetBlocBloc());
   // theme Bloc
   db.registerFactory(() => ThemeCubit());
   // Auth Bloc
@@ -123,8 +119,8 @@ Future<void> init() async {
   db.registerLazySingleton<LocalFav>(
       () => LocalFavImp(sharedPreferences: db()));
 
-  //objects
   final sharedPreferences = await SharedPreferences.getInstance();
+
   final dio = Dio(BaseOptions());
 
   db.registerLazySingleton(() => sharedPreferences);

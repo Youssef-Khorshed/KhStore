@@ -19,10 +19,10 @@ class PostListWidget extends StatelessWidget {
   final List<InsideData> items;
   final String title;
   const PostListWidget({
-    Key? key,
+    super.key,
     required this.items,
     required this.title,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +32,7 @@ class PostListWidget extends StatelessWidget {
 
     // ignore: unrelated_type_equality_checks
     return productbloc.state is LoadingProducts
-        ? LoadingWidget()
+        ? const LoadingWidget()
         : Scaffold(
             appBar: AppBar(
                 title: Text('$title'),

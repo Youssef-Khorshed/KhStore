@@ -1,39 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:store/Core/AlertDialog.dart';
 import 'package:store/Core/applocal.dart';
 import 'package:store/Core/depndancyinjection.dart' as db;
-import 'package:store/Core/internet.dart';
 import 'package:store/Core/strings.dart';
 import 'package:store/Core/theme/theme_cubit.dart';
 import 'package:store/Features/auth/Domain/Entity/userinfo.dart';
 import '../Features/auth/Presentation/Logic/bloc/auth_bloc.dart';
 import '../Features/cart/presentation/logic/bloc/cart_bloc.dart';
 import '../Features/favourite/presentation/logic/bloc/fav_bloc.dart';
-import '../Features/product/Presentation/Logic/bloc/checkinternetblock/check_internet_bloc_bloc.dart';
 import '../Features/product/Presentation/Logic/bloc/productBloc/prodcuts_bloc.dart';
 import 'ReuseableComponent/snackbar_message.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
+// ignore: must_be_immutable
 class MyApp extends StatelessWidget {
   Widget nextwidget;
   bool checkconnection;
-  MyApp({required this.nextwidget, required this.checkconnection});
+  MyApp({super.key, required this.nextwidget, required this.checkconnection});
   @override
   Widget build(BuildContext context) {
-    final isPlatformDark =
-        WidgetsBinding.instance.platformDispatcher.platformBrightness ==
-            Brightness.dark;
-    final initTheme =
-        isPlatformDark ? ThemeCubit.darkTheme : ThemeCubit.lightTheme;
-
     return MultiBlocProvider(
         providers: [
-          BlocProvider(
-            create: (context) => db.db<CheckInternetBlocBloc>()
-              ..add(CheckInternetFirstTimeEvent()),
-          ),
           BlocProvider(
             create: (context) => db.db<AuthBloc>(),
           ),
@@ -100,9 +88,7 @@ class Test extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final cart = context.watch<CartBloc>();
     final fav = context.watch<FavBloc>();
-    final state = context.watch<ProdcutsBloc>();
     final auth = context.watch<AuthBloc>();
     // ignore: prefer_const_constructors
     return MultiBlocListener(
@@ -155,17 +141,17 @@ class Test extends StatelessWidget {
                     auth.add(LoginEvent(
                         email: '11youssef@gmail.com', password: '1234567'));
                   },
-                  child: Text('Login')),
+                  child: const Text('Login')),
               TextButton(
                   onPressed: () {
                     auth.add(LogoutEvent());
                   },
-                  child: Text('Logout')),
+                  child: const Text('Logout')),
               TextButton(
                   onPressed: () {
                     auth.add(ForgetPasswordEvent(password: '123456'));
                   },
-                  child: Text('ForgetPassword')),
+                  child: const Text('ForgetPassword')),
               TextButton(
                   onPressed: () {
                     auth.add(UpdateEvent(
@@ -178,7 +164,7 @@ class Test extends StatelessWidget {
                             image: null,
                             token: null)));
                   },
-                  child: Text('UpdateProfile'))
+                  child: const Text('UpdateProfile'))
             ],
           ),
         ),
@@ -188,7 +174,7 @@ class Test extends StatelessWidget {
 }
 
 class RestartWidget extends StatefulWidget {
-  RestartWidget({required this.child});
+  const RestartWidget({super.key, required this.child});
 
   final Widget child;
 

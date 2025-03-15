@@ -1,8 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:store/Features/cart/data/model/DataModel.dart';
 
-import 'Data.dart';
-
 class Carts extends Equatable {
   bool? status;
   String? message;

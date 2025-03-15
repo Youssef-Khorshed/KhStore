@@ -9,7 +9,7 @@ import '../../../../Core/colors.dart';
 import '../logic/bloc/cart_bloc.dart';
 
 class CartPage extends StatelessWidget {
-  CartPage({super.key});
+  const CartPage({super.key});
 
   @override
   Widget build(BuildContext context) {

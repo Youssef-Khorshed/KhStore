@@ -59,7 +59,8 @@ class _ProductPageState extends State<ProductPage> {
                     margin: const EdgeInsets.all(20.0),
                     padding: const EdgeInsets.all(20.0),
                     decoration: BoxDecoration(
-                        gradient: LinearGradient(colors: [color1, color10]),
+                        gradient:
+                            LinearGradient(colors: const [color1, color10]),
                         borderRadius: BorderRadius.circular(20)),
                     child: ElevatedButton(
                       onPressed: () {
@@ -137,7 +138,7 @@ class _ProductPageState extends State<ProductPage> {
 
                     Padding(
                       padding: EdgeInsets.only(left: width / 2.5),
-                      child: Container(
+                      child: SizedBox(
                         height: 20,
                         child: ListView.separated(
                           scrollDirection: Axis.horizontal,

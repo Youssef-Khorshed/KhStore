@@ -11,7 +11,7 @@ import 'package:store/Features/product/Domain/Entities/categories/Categoty.dart'
 import 'package:store/Features/product/Domain/Entities/product/insidedata.dart';
 import 'package:store/Features/product/Domain/Repositories/product.dart';
 
-typedef Future<Unit> add_delete_update_post();
+typedef add_delete_update_post = Future<Unit> Function();
 
 class ProductRepoImp extends ProductRepo {
   RemoteDataSource remote;

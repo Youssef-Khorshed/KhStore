@@ -8,7 +8,7 @@ class AuthInitial extends AuthState {
   @override
   List<Object?> get props => [];
 }
-
+/// copy with 
 class Registe_Success_State extends AuthState {
   UserEntiy entiy;
   bool change;

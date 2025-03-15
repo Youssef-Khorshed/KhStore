@@ -1,6 +1,5 @@
 import 'package:dartz/dartz.dart';
 import 'package:store/Features/cart/domain/entity/Carts.dart';
-import 'package:store/Features/cart/domain/entity/cartEntity.dart';
 import '../../../../Core/error.dart';
 
 abstract class CartRepo {
