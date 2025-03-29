@@ -57,11 +57,11 @@ class ProdcutsBloc extends Bloc<ProdcutsEvent, ProdcutsState> {
     value.fold((failure) {
       emit(GetProdcutsFail(message: getfailure(failure: failure)));
     }, (products) {
-      products.forEach((element) {
+      for (var element in products) {
         if (element.discount > 0) {
           offerproducts.add(element);
         }
-      });
+      }
       for (int i = 0; i < 6; i++) {
         some_offerproducts.add(offerproducts[i]);
       }

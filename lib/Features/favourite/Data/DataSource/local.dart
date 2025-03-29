@@ -4,7 +4,6 @@ import 'package:dartz/dartz.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:store/Core/exception.dart';
 import 'package:store/Core/strings.dart';
-import 'package:store/Features/favourite/Data/Model/favInsideData.dart';
 import 'package:store/Features/favourite/Data/Model/favModel.dart';
 
 abstract class LocalFav {
@@ -34,5 +33,4 @@ class LocalFavImp extends LocalFav {
   }
 
 // resueable methods
-
 }

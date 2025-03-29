@@ -5,7 +5,7 @@ import 'package:store/Features/Payment/API_KEYS.dart';
 import 'package:store/Features/cart/presentation/logic/bloc/cart_bloc.dart';
 
 class PaymentPage extends StatefulWidget {
-  const PaymentPage({Key? key, required this.bloc}) : super(key: key);
+  const PaymentPage({super.key, required this.bloc});
   final CartBloc bloc;
 
   @override

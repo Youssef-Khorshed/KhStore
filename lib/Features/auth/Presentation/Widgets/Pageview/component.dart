@@ -9,13 +9,13 @@ import '../Auth/login.dart';
 
 class Pageview_component {
   static List<AssetImage> images = [
-    AssetImage(
+    const AssetImage(
       'assets/p1.png',
     ),
-    AssetImage(
+    const AssetImage(
       'assets/p2.png',
     ),
-    AssetImage(
+    const AssetImage(
       'assets/p3.png',
     )
   ];
@@ -29,7 +29,7 @@ class Pageview_component {
         },
         child: Text(
           getLang(context: context, key: "skip")!,
-          style: TextStyle(color: Colors.amber),
+          style: const TextStyle(color: Colors.amber),
         ));
   }
 }

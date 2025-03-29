@@ -20,7 +20,7 @@ class DiscountText extends StatelessWidget {
               decoration: BoxDecoration(
                   color: color8, borderRadius: BorderRadius.circular(5)),
               child: Text(
-                '${getLang(context: context, key: "Discount")} ${discount} EGP',
+                '${getLang(context: context, key: "Discount")} $discount EGP',
                 style: TextStyle(color: color_wthite, fontSize: 12),
               ),
             ),

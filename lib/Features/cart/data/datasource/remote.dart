@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:store/Features/cart/data/model/CartModel.dart';
 import 'package:store/Features/cart/data/model/CartsModel.dart';
 import '../../../../Core/exception.dart';
 import '../../../../Core/strings.dart';

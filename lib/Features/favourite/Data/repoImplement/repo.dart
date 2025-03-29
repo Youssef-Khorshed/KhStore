@@ -2,7 +2,6 @@ import 'package:store/Core/exception.dart';
 import 'package:store/Core/internet.dart';
 import 'package:store/Core/error.dart';
 import 'package:dartz/dartz.dart';
-import 'package:store/Core/strings.dart';
 import 'package:store/Features/auth/Data/DataSource/local.dart';
 import 'package:store/Features/favourite/Data/DataSource/local.dart';
 import 'package:store/Features/favourite/Data/DataSource/remote.dart';

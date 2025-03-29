@@ -1,10 +1,8 @@
 import 'package:store/Core/internet.dart';
-import 'package:store/Core/strings.dart';
 import 'package:store/Features/auth/Data/DataSource/local.dart';
 import 'package:store/Features/cart/data/datasource/local.dart';
 import 'package:store/Features/cart/data/datasource/remote.dart';
 import 'package:store/Features/cart/domain/entity/Carts.dart';
-import 'package:store/Features/cart/domain/entity/cartEntity.dart';
 import 'package:store/Core/error.dart';
 import 'package:dartz/dartz.dart';
 import 'package:store/Features/cart/domain/repo/repo.dart';

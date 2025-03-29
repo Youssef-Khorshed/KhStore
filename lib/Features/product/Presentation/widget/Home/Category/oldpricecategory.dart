@@ -1,7 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../../../Core/colors.dart';
 import '../../../../Domain/Entities/product/insidedata.dart';
 
 Widget oldpriceText(

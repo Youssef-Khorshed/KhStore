@@ -3,7 +3,6 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:store/Core/getFailure.dart';
@@ -14,9 +13,6 @@ import 'package:store/Features/auth/Domain/UseCases/login.dart';
 import 'package:store/Features/auth/Domain/UseCases/logout.dart';
 import 'package:store/Features/auth/Domain/UseCases/register.dart';
 import 'package:store/Features/auth/Domain/UseCases/updateprofile.dart';
-
-import '../../../../../Core/error.dart';
-
 part 'auth_event.dart';
 part 'auth_state.dart';
 
@@ -50,8 +46,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   }
   FutureOr<void> login(LoginEvent event, Emitter<AuthState> emit) async {
     emit(LoadingAuth(change: change));
-    final value =
-        await loginUseCase.call(email: event.email, password: event.password);
+    final value = await loginUseCase.call(
+        email: '11youssef@gmail.com', password: '1234567');
     cleartext();
     change = false;
 

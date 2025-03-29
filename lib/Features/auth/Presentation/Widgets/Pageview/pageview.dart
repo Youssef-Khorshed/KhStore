@@ -10,7 +10,7 @@ import 'package:store/Features/auth/Presentation/Widgets/Auth/login.dart';
 import 'component.dart';
 
 class Pageviews extends StatefulWidget {
-  Pageviews({super.key});
+  const Pageviews({super.key});
 
   @override
   State<Pageviews> createState() => _PageviewsState();
@@ -30,7 +30,7 @@ class _PageviewsState extends State<Pageviews> {
     final h = MediaQuery.of(context).size.height;
     final w = MediaQuery.of(context).size.width;
     return Scaffold(
-      backgroundColor: Color(0xFFFAFAFA),
+      backgroundColor: const Color(0xFFFAFAFA),
       // appBar: AppBar(
 
       //   title: Text(
@@ -93,8 +93,8 @@ class _PageviewsState extends State<Pageviews> {
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
                           color: _currentindex == index
-                              ? Color.fromARGB(227, 211, 234, 0)
-                              : Color.fromARGB(102, 165, 165, 165),
+                              ? const Color.fromARGB(227, 211, 234, 0)
+                              : const Color.fromARGB(102, 165, 165, 165),
                         ),
                       );
                     }).toList(),

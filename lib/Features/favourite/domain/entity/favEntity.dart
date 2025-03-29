@@ -1,8 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:store/Features/favourite/Data/Model/favDataModel.dart';
 
-import 'favData.dart';
-
 class FavEntity extends Equatable {
   bool? status;
   String? message;

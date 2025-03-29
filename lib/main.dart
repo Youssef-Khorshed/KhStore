@@ -3,7 +3,6 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:internet_connection_checker/internet_connection_checker.dart';
 // import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:store/Core/internet.dart';
@@ -31,6 +30,7 @@ Future<void> intialization() async {
   // await stripinit();
   await db.init();
 }
+
 
 // Future<void> stripinit() async {
 //   Stripe.publishableKey =

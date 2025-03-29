@@ -18,7 +18,7 @@ class CartLocalImp extends CartLocal {
   Future<List<CartItemsModel>> getcashedcart({required String key}) {
     final item = sharedPreferences.getString(cartkey);
     if (item != null) {
-      final items = json.decode(item!);
+      final items = json.decode(item);
       final res = items.map((e) => CartItemsModel.fromJson(e)).toList();
       return Future.value(res);
     } else {
